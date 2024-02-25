@@ -5,7 +5,7 @@ import MainContainer from "../components/main-container";
 import { titillium_web } from "./fonts";
 import cls from "classnames";
 
-export default function notFound() {
+export default function NotFound() {
   const matchs = useMediaQuery("(max-width: 768px)", {
     initializeWithValue: false,
   });

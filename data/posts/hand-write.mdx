@@ -1,0 +1,64 @@
+---
+title: 手写题盘点
+date: 2024-02-23
+cover: https://jsd.012700.xyz/gh/jerryc127/CDN/img/butterfly-docs-01-cover.png
+---
+
+## 广度遍历深克隆
+
+```javascript
+const getEmpty = (o) => {
+  if (Array.isArray(o)) return [];
+  if (o !== null && typeof o === "object") return {};
+  return o;
+};
+
+const cloneBfs = (a) => {
+  const root = getEmpty(a),
+    queue = [{ origin: a, copy: root }],
+    map = new Map();
+
+  while (queue.length) {
+    const { origin, copy } = queue.shift();
+    for (let i in origin) {
+      const empty = getEmpty(origin[i]);
+      if (empty === origin[i]) {
+        copy[i] = origin[i];
+      } else {
+        if (map.has(origin[i])) {
+          copy[i] = map.get(origin[i]);
+          continue;
+        }
+        copy[i] = empty;
+        queue.push({ origin: origin[i], copy: copy[i] });
+        map.set(origin[i], empty);
+      }
+    }
+  }
+  return root;
+};
+```
+
+## 限制 promise 并发数量
+
+```javascript
+const pLimit = (limit) => {
+  let count = 0;
+  const task = [];
+  return async (fn) => {
+    if (count >= limit) {
+      await new Promise((r) => task.push(r));
+    }
+    count++;
+    try {
+      const ret = await fn();
+      return ret;
+    } finally {
+      count--;
+      if (task.length) {
+        task.shift()();
+      }
+    }
+  };
+};
+```

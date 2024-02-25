@@ -1,0 +1,28 @@
+.lew-divider {
+  position: relative;
+  margin: 40px auto;
+  width: 100%;
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+  display: block;
+  &-line {
+    width: calc(100% - 4px);
+    border: 2px dashed var(--hr-color);
+  }
+  & &-icon {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: -16px;
+    left: 5%;
+    color: var(--hr-icon-color);
+    display: inline-block;
+    font-size: 28px;
+    transition: left 1s ease-in-out;
+    line-height: 28px;
+  }
+  &:hover &-icon {
+    left: calc(95% - 20px);
+  }
+}

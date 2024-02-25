@@ -1,0 +1,133 @@
+:root {
+  --root-bg-color: linear-gradient(
+    90deg,
+    rgba(247, 149, 51, 0.1),
+    rgba(243, 112, 85, 0.1) 15%,
+    rgba(239, 78, 123, 0.1) 30%,
+    rgba(161, 102, 171, 0.1) 44%,
+    rgba(80, 115, 184, 0.1) 58%,
+    rgba(16, 152, 173, 0.1) 72%,
+    rgba(7, 179, 155, 0.1) 86%,
+    rgba(109, 186, 130, 0.1)
+  );
+  --primary-color: #49b1f5;
+  --bg-color: linear-gradient(
+      90deg,
+      rgba(247, 149, 51, 0.5) 0px,
+      rgba(243, 112, 85, 0.5) 15%,
+      rgba(239, 78, 123, 0.5) 30%,
+      rgba(161, 102, 171, 0.5) 44%,
+      rgba(80, 115, 184, 0.5) 58%,
+      rgba(16, 152, 173, 0.5) 72%,
+      rgba(7, 179, 155, 0.5) 86%,
+      rgba(109, 186, 130, 0.5) 100%
+    ),
+    url("https://ae01.alicdn.com/kf/H21b5f6b8496141a1979a33666e1074d9x.jpg");
+  --header-text-hover-color: #49b1f5;
+  --header-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
+  --sidebar-bg-color: #fff;
+  --button-text-color: #fff;
+  --footer-bg-color: rgba(135, 206, 235, 0.8);
+  --footer-text-color: #eee;
+
+  --text-size: 14px;
+
+  --header-bg: rgba(255, 255, 255, 0.6);
+  --header-color: #4c4948;
+
+  --button-color: #ffffff;
+  --button-bg: #49b0f5;
+  --button-hover-bg: #ff7242;
+
+  --card-bg: hsla(0, 0%, 100%, 0.8);
+  --card-color: #4c4948;
+  --card-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.03);
+  --card-hover-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+
+  --win-scrollbar-color: #49b1f5;
+  --win-scrollbar-bg: rgba(73, 177, 245, 0.2);
+
+  --scrollbar-bg: #dce4eb;
+
+  --mask-bg-color: rgba(238, 238, 238, 0.9);
+
+  --hltools-color: #90a4ae;
+  --hltools-bg-color: #e6ebf1;
+  --hlcodes-bg-color: #f6f8fa;
+  --hlnumber-color: rgba(144, 164, 174, 0.5);
+  --hlexpand-bg: linear-gradient(180deg, rgba(246, 248, 250, 0.6), rgba(246, 248, 250, 0.9));
+
+  --waline-font-size: 1.2rem;
+  --waline-theme-color: #49b1f5;
+  --waline-active-color: #ff7242;
+
+  --modal-bg-color: rgba(255, 255, 255, 0.8);
+  --modal-text-color: var(--card-color);
+  --img-brightness: brightness(1);
+  --hr-color: #a4d8fa;
+  --hr-icon-color: #43a3e4;
+  --meta-color: #858585;
+  --lrc-color: #ff7242;
+  --post-code-content-color: rgb(246, 248, 250);
+  --code-bg-color: rgba(27, 31, 35, 0.05);
+  --post-code-line-color: rgba(144, 164, 174, 0.5);
+  --post-blockquote-bg-color: rgba(73, 177, 245, 0.1);
+  --post-copyright-border-color: rgba(153, 153, 153, 0.2);
+  --post-code-expand-bg: linear-gradient(
+    180deg,
+    rgba(246, 248, 250, 0.6),
+    rgba(246, 248, 250, 0.9)
+  );
+  --post-code-expand-color: rgba(144, 164, 174, 0.5);
+  --mark-bg: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] {
+  --root-bg-color: #0d0d0d;
+  --primary-color: #787878;
+  --header-shadow: none;
+  --sidebar-bg-color: rgb(18, 18, 18);
+  --button-text-color: rgba(255, 255, 255, 0.7);
+  --footer-bg-color: #0d0d0d;
+  --footer-text-color: rgba(255, 255, 255, 0.6);
+  
+  --win-scrollbar-color: #2d3032;
+  --win-scrollbar-bg: rgba(18, 18, 18);
+
+  --scrollbar-bg: #1f1f1f;
+
+  --header-bg: rgba(18, 18, 18, 0.8);
+  --header-color: rgba(255, 255, 255, 0.7);
+
+  --button-color: #ffffffb2;
+  --button-bg: #1f1f1f;
+  --button-hover-bg: #787878;
+
+  --card-bg: rgba(18, 18, 18, 0.8);
+  --card-color: rgb(153, 169, 191);
+
+  --hltools-bg-color: #1a1a1a;
+  --hlcodes-bg-color: #171717;
+  --hlnumber-color: rgba(255, 255, 255, 0.4);
+  --hlexpand-bg: linear-gradient(180deg, rgba(23, 23, 23, 0.6), rgba(23, 23, 23, 0.9));
+
+  --mask-bg-color: rgba(30, 30, 30, 0.9);
+  --modal-bg-color: rgba(18, 18, 18, 0.8);
+  --modal-text-color: var(--card-color);
+  --img-brightness: brightness(0.8);
+  --hr-color: #2d3032;
+  --hr-icon-color: rgb(153, 169, 191);
+  --lrc-color: rgb(153, 169, 191);
+  --post-code-content-color: rgb(23, 23, 23);
+  --code-bg-color: #2c2c2c;
+  --post-code-line-color: rgba(255, 255, 255, 0.4);
+  --post-blockquote-bg-color: #2c2c2c;
+  --post-copyright-border-color: rgba(255, 255, 255, 0.7);
+  --post-code-expand-bg: linear-gradient(
+    180deg,
+    rgba(23, 23, 23, 0.6),
+    rgba(23, 23, 23, 0.9)
+  );
+  --post-code-expand-color: rgba(255, 255, 255, 0.4);
+  --mark-bg: rgba(0, 0, 0, 0.6);
+}

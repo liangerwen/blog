@@ -119,6 +119,10 @@ export const Config = defineDocumentType(() => ({
     cover: {
       type: "string",
     },
+    quote: {
+      type: "list",
+      of: { type: "string" },
+    },
     author: {
       type: "json",
     },

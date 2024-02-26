@@ -8,6 +8,7 @@ import config from "../config";
 import { cookies } from "next/headers";
 import { parse } from "../hooks/json";
 import { THEME_KEY, ThemeType } from "../constants/theme";
+import Script from "next/script";
 
 import "./styles/index.scss";
 
@@ -25,13 +26,24 @@ export default function RootLayout({
   const cookie = cookies().get(THEME_KEY);
   const theme = cookie ? parse(cookie.value) : ThemeType.LIGHT;
   return (
-    <html lang="zh-cmn-Hant" data-theme={theme}>
+    <html lang="zh-CN" data-theme={theme}>
+      <Script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" />
+      <Script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" />
       <body className={cls(space_mono.className, "relative")}>
         <ThemeProvider>
           <Nav />
           {children}
           <Toolbar />
         </ThemeProvider>
+        {/* @ts-ignore */}
+        <meting-js
+          server="netease"
+          type="playlist"
+          id="2312165875"
+          fixed
+          mini
+          autoplay
+        />
       </body>
     </html>
   );

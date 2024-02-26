@@ -5,12 +5,13 @@ import CoverBackground from "@/src/components/cover-background";
 import Footer from "@/src/components/footer";
 import MainContainer from "@/src/components/main-container";
 import Pagination from "@/src/components/pagination";
-
 import cls from "classnames";
 import Link from "next/link";
 import config from "@/src/config";
 import { notFound } from "next/navigation";
 import { titillium_web } from "@/src/app/fonts";
+import { useEffect, useRef } from "react";
+import Typed from "typed.js";
 
 interface PageProps {
   current?: number;
@@ -19,6 +20,19 @@ interface PageProps {
 export default function Page({ current = 1 }: PageProps) {
   const pageSize = config.post.pageSize || 10;
   const maxPageNumber = Math.ceil(allPosts.length / pageSize);
+  const ref = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (config.quote && config.quote.length) {
+      const typed = new Typed(ref.current, {
+        strings: config.quote,
+        typeSpeed: 120,
+        backSpeed: 60,
+        loop: true,
+      });
+      return () => typed.destroy();
+    }
+  }, []);
   // 超过数量
   if (current > maxPageNumber) {
     return notFound();
@@ -32,7 +46,13 @@ export default function Page({ current = 1 }: PageProps) {
         cover={config.cover}
         height="fullScreen"
         element="header"
-      ></CoverBackground>
+        className="text-[var(--button-color)]"
+      >
+        <h1 className="text-5xl">{config.name}</h1>
+        <p className="text-[var(--button-color)] my-6 text-3xl">
+          <span ref={ref} />
+        </p>
+      </CoverBackground>
       <MainContainer rootClassName="fade-move-up">
         <div>
           {posts.map((post, idx) => (

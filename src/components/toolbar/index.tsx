@@ -33,7 +33,7 @@ export default function Toolbar() {
       )}
     >
       {actions.map((i) => (
-        <Button key={i.title} {...i} className="mt-2" />
+        <Button key={i.title} {...i} className="mt-2 rounded-md" />
       ))}
     </div>
   );

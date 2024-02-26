@@ -39,6 +39,10 @@ export default function useScrollDirection() {
   };
 
   useEffect(() => {
+    ref.current = {
+      y: window.scrollY || document.documentElement.scrollTop,
+      x: window.scrollX || document.documentElement.scrollLeft,
+    };
     const listener = throttle(_listener, 200);
     window.addEventListener("scroll", listener, false);
     listener();
@@ -52,6 +56,7 @@ export default function useScrollDirection() {
     down: direction === Direction.DOWN,
     left: direction === Direction.LEFT,
     right: direction === Direction.RIGHT,
+    noDirection: direction === Direction.NONE,
     ...distance,
   };
 }

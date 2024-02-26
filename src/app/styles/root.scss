@@ -67,14 +67,30 @@ img:hover {
     0 2px 4px 0 rgba(232, 237, 250, 0.5);
 }
 
-.fade-move-in {
-  animation: fade-move-in 1s;
+.fade-move-up {
+  animation: fade-move-up 1s;
 }
 
-@keyframes fade-move-in {
+@keyframes fade-move-up {
   0% {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: translateY(0);
+  }
+}
+
+.fade-move-down {
+  animation: fade-move-down 1s;
+}
+
+@keyframes fade-move-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px);
   }
   100% {
     opacity: 1;

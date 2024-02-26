@@ -1,13 +1,9 @@
-import {
-  ComputedFields,
-  defineDocumentType,
-  makeSource,
-} from "contentlayer/source-files";
+import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import { extractTocHeadings } from "pliny/mdx-plugins/index.js";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
-import { getTextContent, getWordCount } from "./utils/remark-plugin";
+import { getTextContent, getWordCount } from "./plugins/remark-plugin";
 import fs from "fs";
 import { join } from "path";
 
@@ -118,6 +114,9 @@ export const Config = defineDocumentType(() => ({
   contentType: "data",
   fields: {
     name: {
+      type: "string",
+    },
+    cover: {
       type: "string",
     },
     author: {

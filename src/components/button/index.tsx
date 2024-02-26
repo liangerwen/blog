@@ -27,7 +27,7 @@ export default function Button(
       onClick={onClick}
       {...rest}
     >
-      <span className={styles["lew-button-icon"]}>{icon}</span>
+      {icon && <span className={styles["lew-button-icon"]}>{icon}</span>}
       {children}
     </button>
   );

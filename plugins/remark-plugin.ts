@@ -18,8 +18,10 @@ export function remarkTextContent() {
   return (tree: Parent, file: VFile) => {
     let content = "";
     visit(tree, (node) => {
-      // @ts-ignore
-      content += node?.value || "";
+      if(node.type!=="html"){
+        // @ts-ignore
+        content += node?.value || "";
+      }
     });
     file.data.textContent = content;
   };

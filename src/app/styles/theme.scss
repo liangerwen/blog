@@ -61,8 +61,8 @@
   --waline-theme-color: #49b1f5;
   --waline-active-color: #ff7242;
 
-  --modal-bg-color: rgba(255, 255, 255, 0.8);
-  --modal-text-color: var(--card-color);
+  --modal-bg: rgba(255, 255, 255, 0.8);
+  --modal-color: var(--card-color);
   --img-brightness: brightness(1);
   --hr-color: #a4d8fa;
   --hr-icon-color: #43a3e4;
@@ -112,8 +112,8 @@
   --hlexpand-bg: linear-gradient(180deg, rgba(23, 23, 23, 0.6), rgba(23, 23, 23, 0.9));
 
   --mask-bg-color: rgba(30, 30, 30, 0.9);
-  --modal-bg-color: rgba(18, 18, 18, 0.8);
-  --modal-text-color: var(--card-color);
+  --modal-bg: rgba(18, 18, 18, 0.8);
+  --modal-color: var(--card-color);
   --img-brightness: brightness(0.8);
   --hr-color: #2d3032;
   --hr-icon-color: rgb(153, 169, 191);

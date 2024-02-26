@@ -125,8 +125,8 @@ export default function Post({ params }: IProps) {
         </div>
       </CoverBackground>
       <MainContainer
-        className="card px-[40px] py-[50px]"
-        rootClassName="fade-move-in"
+        className="card px-[40px] py-[50px] md:px-[14px] md:py-[36px]"
+        rootClassName="fade-move-up"
       >
         <div className={styles.post}>
           <Mdx code={post.body.code} />
@@ -280,7 +280,7 @@ export default function Post({ params }: IProps) {
         <Divider />
         <Waline />
       </MainContainer>
-      <Footer cover={post.cover} className="fade-move-in" />
+      <Footer cover={post.cover} className="fade-move-up" />
     </>
   );
 }

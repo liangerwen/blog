@@ -1,7 +1,10 @@
 {
     "name": "liangerwen's☻blog",
+    "cover": "/images/cover.jpg",
     "author": {
         "name": "liangerwen",
+        "avatar": "/images/avatar.jpg",
+        "description":"这瓜娃子懒得很，什么都没有留哈！",
         "github": "https://github.com/liangerwen",
         "gitee": "https://gitee.com/liang_er_da",
         "juejin": "https://juejin.cn/user/4051042477804423"

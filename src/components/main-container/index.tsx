@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import cls from "classnames";
-import { useMediaQuery } from "usehooks-ts";
+import AuthorCard from "../author-card";
 
 export interface MainContainerProps {
   className?: string;
@@ -17,22 +17,17 @@ export default function MainContainer({
   showSideBar = true,
   rootClassName,
 }: MainContainerProps) {
-  const matchs = useMediaQuery("(min-width: 768px)", {
-    defaultValue: true,
-    initializeWithValue: false,
-  });
   return (
     <main
       className={cls(
-        "mt-0 mx-auto max-w-[1200px] flex",
-        matchs ? "py-[40px] px-[15px]" : "px-[5px] py-[20px]",
+        "mt-0 mx-auto max-w-[1200px] flex lg:flex-col px-[15px] py-[40px] md:px-[5px] md:py-[20px] relative",
         rootClassName
       )}
     >
       <div className={cls("flex-1 max-w-full", className)}>{children}</div>
-      {matchs && showSideBar && (
-        <div className="w-[280px] flex-shrink-0 ml-[16px]">
-          <div className="card px-[40px] py-[50px]"></div>
+      {showSideBar && (
+        <div className="w-[280px] flex-shrink-0 ml-[16px] lg:ml-0 lg:mt-[20px] lg:w-full sticky top-[20px] h-fit">
+          <AuthorCard />
         </div>
       )}
     </main>

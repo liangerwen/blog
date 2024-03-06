@@ -28,7 +28,7 @@ const Pre: Required<MDXComponents>["pre"] = ({
     ) {
       const { className: codeCls, children: child, ...props } = children.props;
       if (typeof child === "string") {
-        const language = getLanguageByClassName(codeCls) || "CODE";
+        const language = getLanguageByClassName(codeCls);
         return (
           <BlockCode
             className="highlight-code"

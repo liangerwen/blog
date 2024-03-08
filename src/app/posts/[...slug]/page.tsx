@@ -16,6 +16,7 @@ import Footer from "@/src/components/footer";
 import MainContainer from "@/src/components/main-container";
 import dayjs from "dayjs";
 import { allPosts } from "@/src/data";
+import { estimateReadTimeMinutes } from "@/src/utils/read-time";
 
 export const generateStaticParams = async () => {
   const paths = allPosts.map((p) => ({ slug: p.slug.split("/") }));
@@ -55,13 +56,12 @@ export default function Post({ params }: IProps) {
   return (
     <>
       <CoverBackground cover={post.cover} element="header">
-        <div className="px-[8%] text-white">
-          <h1 className="mb-[8px]">{post.title}</h1>
-          <div>
-            <span className="text-sm">{post.modifyTime}</span>
-          </div>
-          <div>
+        <div className="px-[8%] text-white opacity-90">
+          <h1 className="mb-[12px]">{post.title}</h1>
+          <div className="text-[var(--button-color)]">
+            <Icon icon="icon-park-solid:word" className="mr-1" />
             <span className="text-sm">
+              字数统计：
               {formatNumber(post.wordCount, [
                 {
                   unit: "w",
@@ -73,8 +73,19 @@ export default function Post({ params }: IProps) {
                 },
               ])}
             </span>
-            |<span>{dayjs(post.createTime).format("YYYY-MM-DD HH:mm:ss")}</span>
-            |<span>{dayjs(post.modifyTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+            <span className="mx-1">|</span>
+            <Icon icon="solar:calendar-bold-duotone" className="mr-1" />
+            <span className="text-sm">
+              阅读时长：
+              {estimateReadTimeMinutes({ text: post.textContent, wpm: 180 })}
+              分钟
+            </span>
+            <span className="mx-1">|</span>
+            <Icon icon="solar:calendar-bold-duotone" className="mr-1" />
+            <span className="text-sm">
+              发表于：
+              {dayjs(post.createTime).format("YYYY-MM-DD")}
+            </span>
           </div>
         </div>
       </CoverBackground>

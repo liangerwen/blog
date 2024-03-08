@@ -6,7 +6,7 @@ import {
   Dispatch,
 } from "react";
 import Cookies from "js-cookie";
-import { parse, stringify } from "./json";
+import { parse, stringify } from "../utils/json";
 
 export function useCookie<T>(key: string, initialValue: T) {
   const [store, setStore] = useState<T>(initialValue);

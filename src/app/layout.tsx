@@ -6,7 +6,7 @@ import Toolbar from "../components/toolbar";
 import { ThemeProvider } from "../components/theme";
 import config from "../config";
 import { cookies } from "next/headers";
-import { parse } from "../hooks/json";
+import { parse } from "../utils/json";
 import { THEME_KEY, ThemeType } from "../constants/theme";
 import Script from "next/script";
 

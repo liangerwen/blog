@@ -1,6 +1,5 @@
 "use client";
 
-import { allPosts } from "@/.contentlayer/generated";
 import CoverBackground from "@/src/components/cover-background";
 import Footer from "@/src/components/footer";
 import MainContainer from "@/src/components/main-container";
@@ -12,6 +11,7 @@ import { notFound } from "next/navigation";
 import { titillium_web } from "@/src/app/fonts";
 import { useEffect, useRef } from "react";
 import Typed from "typed.js";
+import { allPosts } from "@/src/data";
 
 interface PageProps {
   current?: number;
@@ -19,7 +19,7 @@ interface PageProps {
 
 export default function Page({ current = 1 }: PageProps) {
   const pageSize = config.post.pageSize || 10;
-  const maxPageNumber = Math.ceil(allPosts.length / pageSize);
+  const maxPageNumber = Math.max(Math.ceil(allPosts.length / pageSize), 1);
   const ref = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {

@@ -42,7 +42,6 @@ export default function RootLayout({
           id="2312165875"
           fixed
           mini
-          autoplay
         />
       </body>
     </html>

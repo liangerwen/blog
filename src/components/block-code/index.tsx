@@ -15,7 +15,7 @@ type BlockCodeProps = Omit<
   "dangerouslySetInnerHTML" | "children"
 > & {
   code: string;
-  language: string;
+  language?: string;
 };
 
 export default function BlockCode({
@@ -27,11 +27,16 @@ export default function BlockCode({
   const [expend, setExpend] = useState(false);
   const [showCode, setShowCode] = useState(true);
 
-  const innerHtml = (
-    language
-      ? hljs.highlight(code, { language, ignoreIllegals: true })
-      : hljs.highlightAuto(code)
-  ).value;
+  let innerHtml = code;
+
+  try {
+    innerHtml = (
+      language
+        ? hljs.highlight(code, { language, ignoreIllegals: true })
+        : hljs.highlightAuto(code)
+    ).value;
+  } catch {}
+
   const lines = innerHtml.split(/\n/).slice(0, -1);
   const html = `<ol class="${styles["code-list"]}">${(expend
     ? lines
@@ -57,7 +62,7 @@ export default function BlockCode({
             )}
             onClick={() => setShowCode((show) => !show)}
           />
-          <span className={styles["code-lang"]}>{language.toUpperCase()}</span>
+          <span className={styles["code-lang"]}>{(language || "code").toUpperCase()}</span>
         </div>
         <Copy content={code} />
       </div>

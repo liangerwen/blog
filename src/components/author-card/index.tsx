@@ -27,7 +27,7 @@ export default function AuthorCard() {
       >
         加入书签
       </Button>
-      <div className="flex justify-center text-3xl mt-2">
+      <div className="flex justify-center text-2xl mt-2">
         <a
           href={config.author?.github}
           className={cls("mr-2", hoverRotateClassName)}

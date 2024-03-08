@@ -1,8 +1,6 @@
-import { allPosts } from "contentlayer/generated";
 import { headers } from "next/headers";
 import styles from "./index.module.scss";
 import { notFound } from "next/navigation";
-import { TocItem } from "pliny/mdx-plugins/remark-toc-headings.js";
 import cls from "classnames";
 import Mdx from "@/src/components/mdx";
 import { Metadata } from "next";
@@ -17,6 +15,7 @@ import Divider from "@/src/components/divider";
 import Footer from "@/src/components/footer";
 import MainContainer from "@/src/components/main-container";
 import dayjs from "dayjs";
+import { allPosts } from "@/src/data";
 
 export const generateStaticParams = async () => {
   const paths = allPosts.map((p) => ({ slug: p.slug.split("/") }));
@@ -47,64 +46,19 @@ interface IProps {
   params: { slug: string[] };
 }
 
-type DirectoryTreeItem = TocItem & {
-  children?: DirectoryTreeItem[];
-  parentId?: string;
-};
-
-const directoryTree = (directory: DirectoryTreeItem[]) => {
-  const queue = [directory[0]];
-
-  for (let i = 1; i < directory.length; i++) {
-    const current = directory[i],
-      prev = directory[i - 1];
-    if (current.depth > prev.depth) {
-      current.parentId = prev.url;
-    } else {
-      do {
-        const last = queue[queue.length - 1];
-        if (last.depth < current.depth) break;
-        queue.pop();
-      } while (queue.length);
-      if (queue.length) {
-        current.parentId = queue[queue.length - 1].url;
-      }
-    }
-    queue.push(current);
-  }
-
-  return directory;
-};
-
 export default function Post({ params }: IProps) {
   const slug = decodeURI(params.slug.join("/"));
   const post = allPosts.find((p) => p.slug === slug);
   if (!post) return notFound();
   const currentUrl = headers().get("x-request-url")!;
-  const toc = directoryTree(post.toc);
 
-  const renderDirectoryTree = (directory: DirectoryTreeItem[], prefix = "") => {
-    return directory.map((d, idx) => {
-      const children = toc.filter((i) => i.parentId === d.url);
-      const nextPrefix = `${prefix}${idx + 1}.`;
-      return (
-        <div key={d.url} className="pl-2">
-          {nextPrefix}
-          {d.url}
-          {children.length > 0 && renderDirectoryTree(children, nextPrefix)}
-        </div>
-      );
-    });
-  };
-
-  // return renderDirectoryTree(toc.filter((i) => !i.parentId));
   return (
     <>
       <CoverBackground cover={post.cover} element="header">
         <div className="px-[8%] text-white">
           <h1 className="mb-[8px]">{post.title}</h1>
           <div>
-            <span className="text-sm">{post.date}</span>
+            <span className="text-sm">{post.modifyTime}</span>
           </div>
           <div>
             <span className="text-sm">
@@ -127,6 +81,7 @@ export default function Post({ params }: IProps) {
       <MainContainer
         className="card px-[40px] py-[50px] md:px-[14px] md:py-[36px]"
         rootClassName="fade-move-up"
+        toc={post.toc}
       >
         <div className={styles.post}>
           <Mdx code={post.body.code} />

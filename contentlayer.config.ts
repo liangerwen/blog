@@ -1,9 +1,8 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
-import { extractTocHeadings } from "pliny/mdx-plugins/index.js";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
-import { getTextContent, getWordCount } from "./plugins/remark-plugin";
+import { extractTocHeadings, getTextContent, getWordCount } from "./plugins/remark-plugin";
 import fs from "fs";
 import { join } from "path";
 
@@ -14,7 +13,7 @@ export const Post = defineDocumentType(() => ({
   fields: {
     title: {
       type: "string",
-      required: true,
+      default: "",
     },
     description: {
       type: "string",
@@ -24,7 +23,6 @@ export const Post = defineDocumentType(() => ({
     },
     date: {
       type: "date",
-      required: true,
     },
     published: {
       type: "boolean",
@@ -59,6 +57,10 @@ export const Post = defineDocumentType(() => ({
       type: "date",
       resolve: async (doc) =>
         fs.statSync(join("data", doc._raw.sourceFilePath)).mtime,
+    },
+    title: {
+      type: "string",
+      resolve: (doc) => doc.title || doc._raw.sourceFileName.split(".mdx")?.[0],
     },
   },
 }));

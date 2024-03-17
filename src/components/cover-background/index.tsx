@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from "react";
 import cls from "classnames";
 import Icon from "../icon";

@@ -35,7 +35,7 @@ const Pagination: React.FC<IProps> = ({
     const _total = Math.floor(total);
     const remainder = _total % limit;
     return remainder === 0 ? _total / limit : Math.floor(_total / limit) + 1;
-  }, [total]);
+  }, [total, limit]);
 
   const defaultRenderItem: IProps["children"] = ({
     children,

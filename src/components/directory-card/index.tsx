@@ -90,7 +90,7 @@ export default function DirectoryCard({
     listener();
     window.addEventListener("scroll", listener);
     return () => window.removeEventListener("scroll", listener);
-  }, []);
+  }, [toc]);
 
   return (
     toc &&

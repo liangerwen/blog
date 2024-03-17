@@ -1,7 +1,7 @@
-import { gradientColor } from "@/src/utils/color";
 import { ReactNode } from "react";
 import cls from "classnames";
 import Icon from "../icon";
+import {useMediaQuery} from "usehooks-ts";
 
 export interface CoverBackgroundProps {
   element?: "div" | "footer" | "header";
@@ -20,6 +20,7 @@ export default function CoverBackground({
   position = "center",
   className,
 }: CoverBackgroundProps) {
+  const isMoblie = useMediaQuery("(max-width: 768px)")
   return (
     <Element
       className={cls(
@@ -32,8 +33,13 @@ export default function CoverBackground({
         backgroundPosition: position,
       }}
     >
-      {height === "fullScreen" && (
-        <video autoPlay muted loop className="size-full pointer-events-none object-cover">
+      {height === "fullScreen" && !isMoblie && (
+        <video
+          autoPlay
+          muted
+          loop
+          className="size-full pointer-events-none object-cover absolute top-0 left-0"
+        >
           <source src="https://t.mwm.moe/acg/acg" type="video/mp4" />
         </video>
       )}

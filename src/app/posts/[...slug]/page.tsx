@@ -38,7 +38,7 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     applicationName: "liangerwen's blog",
-    authors: [{ name: config.author.name, url: config.author.github }],
+    authors: [{ name: config.name, url: config.github }],
     keywords: [post.title],
   };
 }
@@ -55,7 +55,10 @@ export default function Post({ params }: IProps) {
 
   return (
     <>
-      <CoverBackground cover={post.cover} element="header">
+      <CoverBackground
+        cover={post.cover}
+        element="header"
+      >
         <div className="px-[8%] text-white opacity-90">
           <h1 className="mb-[12px]">{post.title}</h1>
           <div className="text-[var(--button-color)]">
@@ -108,7 +111,7 @@ export default function Post({ params }: IProps) {
               文章作者:
             </span>
             <span className={styles["post-copyright-info"]}>
-              <a href="mailto:1354383179@qq.com">{config.author.name}</a>
+              <a href="mailto:1354383179@qq.com">{config.name}</a>
             </span>
           </div>
           <div className={styles["post-copyright"]}>
@@ -166,7 +169,7 @@ export default function Post({ params }: IProps) {
                 "border-[#56b6e7] text-[#56b6e7] hover:text-[#fff] hover:bg-[#56b6e7]"
               )}
               target="_blank"
-              href={`https://twitter.com/intent/tweet?text=${post.title} by ${config.author.name}&url=${currentUrl}&via=https://yumozhi.com`}
+              href={`https://twitter.com/intent/tweet?text=${post.title} by ${config.name}&url=${currentUrl}&via=https://yumozhi.com`}
               rel="noreferrer"
             >
               <Icon icon="mdi:twitter" />

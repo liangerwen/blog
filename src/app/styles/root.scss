@@ -36,7 +36,12 @@ html {
 body {
   line-height: 2;
   position: relative;
-  background: var(--root-bg-color);
+  background-image: var(--root-bg);
+  background-color: var(--root-bg);
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-attachment: fixed;
+  background-size: 100%;
 
   * {
     scrollbar-width: thin;

@@ -12,6 +12,10 @@ import { titillium_web } from "@/src/app/fonts";
 import { useEffect, useRef } from "react";
 import Typed from "typed.js";
 import { allPosts } from "@/src/data";
+import formatNumber from "@/src/utils/format-number";
+import { estimateReadTimeMinutes } from "@/src/utils/read-time";
+import dayjs from "dayjs";
+import Icon from "../icon";
 
 interface PageProps {
   current?: number;
@@ -54,38 +58,73 @@ export default function Page({ current = 1 }: PageProps) {
         </p>
       </CoverBackground>
       <MainContainer rootClassName="fade-move-up">
-        <div>
-          {posts.map((post, idx) => (
-            <div
-              key={post._id}
+        {posts.map((post, idx) => (
+          <div
+            key={post._id}
+            className={cls(
+              "w-full flex card mb-[20px] h-[16.8em] md:h-auto cover-img-box md:flex-col",
+              idx % 2 === 1 && "flex-row-reverse"
+            )}
+          >
+            <Link
               className={cls(
-                "w-full flex card mb-[20px] h-[16.8em] md:h-auto cover-img-box md:flex-col",
-                idx % 2 === 1 && "flex-row-reverse"
+                "bg-[#49b1f5] overflow-hidden w-[45%] h-full md:w-full md:h-[230px]"
+              )}
+              href={`/${post._raw.flattenedPath}`}
+            >
+              <img className="cover-img" src={post.cover} alt="页面未找到" />
+            </Link>
+            <div
+              className={cls(
+                titillium_web.className,
+                "bg-[var(--card-bg)] flex justify-center flex-col px-[40px] w-[55%] md:w-full md:p-[20px] md:pb-[30px]"
               )}
             >
-              <Link
-                className={cls(
-                  "bg-[#49b1f5] overflow-hidden w-[45%] h-full md:w-full md:h-[230px]"
-                )}
-                href={`/${post._raw.flattenedPath}`}
-              >
-                <img className="cover-img" src={post.cover} alt="页面未找到" />
+              <Link href={`/${post._raw.flattenedPath}`}>
+                <h2 className="line-clamp-1 break-all">{post.title}</h2>
               </Link>
-              <div
-                className={cls(
-                  titillium_web.className,
-                  "bg-[var(--card-bg)] flex justify-center flex-col px-[40px] w-[55%] md:w-full md:p-[20px] md:pb-[30px]"
-                )}
-              >
-                <Link href={`/${post._raw.flattenedPath}`}>
-                  <h2>{post.title}</h2>
-                </Link>
-                <span className="my-[6px]"></span>
-                <p className="line-clamp-2">{post.textContent}</p>
+              <div className="my-[6px] text-[#858585]">
+                <Icon icon="icon-park-solid:word" className="mr-1" />
+                <span className="text-sm">
+                  字数统计：
+                  {formatNumber(post.wordCount, [
+                    {
+                      unit: "w",
+                      step: 10000,
+                    },
+                    {
+                      unit: "k",
+                      step: 1000,
+                    },
+                  ])}
+                </span>
+                <span className="mx-1">|</span>
+                <Icon
+                  icon="humbleicons:clock"
+                  className="mr-1"
+                />
+                <span className="text-sm">
+                  阅读时长：
+                  {estimateReadTimeMinutes({
+                    text: post.textContent,
+                    wpm: 180,
+                  })}
+                  分钟
+                </span>
+                <span className="mx-1">|</span>
+                <Icon
+                  icon="solar:calendar-bold-duotone"
+                  className="mr-1"
+                />
+                <span className="text-sm">
+                  发表于：
+                  {dayjs(post.createTime).format("YYYY-MM-DD")}
+                </span>
               </div>
+              <p className="line-clamp-2 break-all">{post.textContent}</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
         <Pagination total={allPosts.length} currentPage={current}>
           {({ children, className, nextPage }) => {
             const Element = nextPage === current ? "span" : Link;

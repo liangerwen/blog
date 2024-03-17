@@ -26,7 +26,7 @@ export default function Footer({ cover, className }: FooterProps) {
         </a>
       </p>
       <p>
-        Copyright ©2021 - {new Date().getFullYear()} By {config.author.name}
+        Copyright ©2021 - {new Date().getFullYear()} By {config.name}
       </p>
     </CoverBackground>
   );

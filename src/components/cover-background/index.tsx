@@ -23,15 +23,20 @@ export default function CoverBackground({
   return (
     <Element
       className={cls(
-        "bg-cover bg-no-repeat bg-center mark flex justify-center items-center relative",
+        "bg-cover bg-no-repeat bg-center mark flex justify-center items-center relative overflow-hidden",
         className
       )}
       style={{
-        backgroundImage: cover ? `url(${cover})` : gradientColor(),
+        backgroundImage: `url(${cover})`,
         height: height === "fullScreen" ? "100vh" : height,
         backgroundPosition: position,
       }}
     >
+      {height === "fullScreen" && (
+        <video autoPlay muted loop className="size-full pointer-events-none object-cover">
+          <source src="https://t.mwm.moe/acg/acg" type="video/mp4" />
+        </video>
+      )}
       <div className="absolute w-full text-center">{children}</div>
       {height === "fullScreen" && (
         <div

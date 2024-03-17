@@ -2,9 +2,14 @@ import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
-import { extractTocHeadings, getTextContent, getWordCount } from "./plugins/remark-plugin";
+import {
+  extractTocHeadings,
+  getTextContent,
+  getWordCount,
+} from "./plugins/remark-plugin";
 import fs from "fs";
 import { join } from "path";
+import getRandomImageUrl from "./random.config";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -50,17 +55,21 @@ export const Post = defineDocumentType(() => ({
     },
     createTime: {
       type: "date",
-      resolve: async (doc) =>
+      resolve: (doc) =>
         fs.statSync(join("data", doc._raw.sourceFilePath)).birthtime,
     },
     modifyTime: {
       type: "date",
-      resolve: async (doc) =>
+      resolve: (doc) =>
         fs.statSync(join("data", doc._raw.sourceFilePath)).mtime,
     },
     title: {
       type: "string",
       resolve: (doc) => doc.title || doc._raw.sourceFileName.split(".mdx")?.[0],
+    },
+    cover: {
+      type: "string",
+      resolve: (doc) => doc.cover || getRandomImageUrl("pc"),
     },
   },
 }));
@@ -107,6 +116,10 @@ export const CustomPage = defineDocumentType(() => ({
       type: "string",
       resolve: (doc) => doc._raw.flattenedPath.replace("custom/", ""),
     },
+    cover: {
+      type: "string",
+      resolve: (doc) => doc.cover || getRandomImageUrl("pc"),
+    },
   },
 }));
 
@@ -115,7 +128,7 @@ export const Config = defineDocumentType(() => ({
   filePathPattern: `config.json`,
   contentType: "data",
   fields: {
-    name: {
+    title: {
       type: "string",
     },
     cover: {
@@ -125,14 +138,39 @@ export const Config = defineDocumentType(() => ({
       type: "list",
       of: { type: "string" },
     },
-    author: {
-      type: "json",
+    name: {
+      type: "string",
+    },
+    avatar: {
+      type: "string",
+    },
+    description: {
+      type: "string",
+    },
+    github: {
+      type: "string",
+    },
+    gitee: {
+      type: "string",
+    },
+    juejin: {
+      type: "string",
     },
     post: {
       type: "json",
       default: {
         expendLine: 15,
       },
+    },
+  },
+  computedFields: {
+    cover: {
+      type: "string",
+      resolve: (doc) => doc.cover || getRandomImageUrl("pc"),
+    },
+    avatar: {
+      type: "string",
+      resolve: (doc) => doc.avatar || getRandomImageUrl("avatar"),
     },
   },
 }));

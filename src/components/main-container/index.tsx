@@ -23,15 +23,17 @@ export default function MainContainer({
   return (
     <main
       className={cls(
-        "mt-0 mx-auto max-w-[1200px] flex lg:flex-col px-[15px] py-[40px] md:px-[5px] md:py-[20px] relative",
+        "mt-0 mx-auto max-w-[1200px] flex lg:flex-col px-[15px] py-[40px] md:px-[5px] md:py-[20px]",
         rootClassName
       )}
     >
       <div className={cls("flex-1 max-w-full", className)}>{children}</div>
       {showSideBar && (
-        <div className="w-[280px] flex-shrink-0 ml-[16px] lg:ml-0 lg:mt-[20px] lg:w-full sticky top-[20px] h-fit">
+        <div className="w-[280px] flex-shrink-0 ml-[16px] lg:ml-0 lg:mt-[20px] lg:w-full">
           <AuthorCard />
-          <DirectoryCard toc={toc} className="mt-[16px]" />
+          <div className="sticky top-[20px]">
+            <DirectoryCard toc={toc} className="mt-[16px]" />
+          </div>
         </div>
       )}
     </main>

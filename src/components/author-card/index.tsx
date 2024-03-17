@@ -3,22 +3,22 @@ import Button from "../button";
 import { addToBookmark } from "@/src/utils/bookmark";
 import cls from "classnames";
 import Icon from "../icon";
-import Image from 'next/image'
 
 const hoverRotateClassName = "transition duration-300 hover:rotate-[360deg]";
 
 export default function AuthorCard() {
   return (
     <div className="card px-[24px] py-[20px] text-center">
-      <Image
-        src={config.author?.avatar}
-        alt={config.author?.name}
-        height={110}
-        width={110}
-        className={cls("mx-auto rounded-full", hoverRotateClassName)}
+      <img
+        src={config.avatar}
+        alt={config.name}
+        className={cls(
+          "mx-auto rounded-full w-[110px] h-[110px] object-cover",
+          hoverRotateClassName
+        )}
       />
-      <h3 className="mt-2">{config.author?.name}</h3>
-      <p className="mt-2">{config.author?.description}</p>
+      <h3 className="mt-2">{config?.name}</h3>
+      <p className="mt-2">{config?.description}</p>
       <Button
         className="mt-2"
         block
@@ -29,7 +29,7 @@ export default function AuthorCard() {
       </Button>
       <div className="flex justify-center text-2xl mt-2">
         <a
-          href={config.author?.github}
+          href={config.github}
           className={cls("mr-2", hoverRotateClassName)}
           title="github"
           target="_blank"
@@ -37,7 +37,7 @@ export default function AuthorCard() {
           <Icon icon="simple-icons:github" />
         </a>
         <a
-          href={config.author?.gitee}
+          href={config.gitee}
           className={cls(hoverRotateClassName)}
           title="gitee"
           target="_blank"

@@ -77,7 +77,7 @@
     padding: 0.12rem 0.4rem 0.12rem 1.4rem;
     &::before {
       position: absolute;
-      top: calc(50% - 0.3rem);
+      top: 0.8rem;
       left: 0;
       width: 0.6rem;
       height: 0.6rem;
@@ -89,6 +89,10 @@
     &:hover::before {
       border-color: var(--button-hover-bg);
     }
+    .mdx-ul {
+      margin-bottom: 0;
+      margin-top: 0.6rem;
+    }
     .mdx-p {
       margin-bottom: 0;
     }
@@ -96,15 +100,22 @@
 }
 .mdx-ol {
   margin-bottom: 16px;
+  counter-reset: li;
   .mdx-li {
     list-style: none;
-    counter-increment: li;
+    padding: 0.12rem 0.4rem 0.12rem 1.8rem;
+    margin: 0.3rem 0;
+    position: relative;
     &::before {
+      position: absolute;
+      top: 0.4rem;
+      left: 0;
       display: inline-block;
       width: 1.1rem;
       height: 1.1rem;
       line-height: 1.1rem;
       border-radius: 50%;
+      counter-increment: li;
       content: counter(li);
       text-align: center;
       background: var(--button-bg);
@@ -118,6 +129,10 @@
     }
     .mdx-p {
       margin-bottom: 0;
+    }
+    .mdx-ol {
+      margin-bottom: 0;
+      margin-top: 0.6rem;
     }
   }
 }

@@ -42,7 +42,7 @@ export default function CoverBackground({
           loop
           className="size-full pointer-events-none object-cover absolute top-0 left-0"
         >
-          <source src="https://t.mwm.moe/acg/acg" type="video/mp4" />
+          <source src="https://t.mwm.moe/acg" type="video/mp4" />
         </video>
       )}
       <div className="absolute w-full text-center">{children}</div>

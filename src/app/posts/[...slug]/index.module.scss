@@ -222,10 +222,11 @@
     display: inline-block;
     &:hover + .exceptional-qrcode {
       display: flex;
+      gap: 10px;
     }
   }
   .exceptional-qrcode {
-    max-width: 100%;
+    width: 450px;
     display: none;
     position: absolute;
     bottom: 100%;
@@ -250,13 +251,7 @@
       border-bottom: 13px solid transparent;
     }
     .pay-qrcode {
-      padding: 30px;
-    }
-    .wechat-pay {
-      background: #5cb85c;
-    }
-    .ali-pay {
-      background: #49b1f5;
+      width: 200px;
     }
   }
 }

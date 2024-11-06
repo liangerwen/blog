@@ -55,10 +55,7 @@ export default function Post({ params }: IProps) {
 
   return (
     <>
-      <CoverBackground
-        cover={post.cover}
-        element="header"
-      >
+      <CoverBackground cover={post.cover} element="header">
         <div className="px-[8%] text-white opacity-90">
           <h1 className="mb-[12px]">{post.title}</h1>
           <div className="text-[var(--button-color)]">
@@ -230,20 +227,8 @@ export default function Post({ params }: IProps) {
             打赏
           </Button>
           <div className={styles["exceptional-qrcode"]}>
-            <div className="mx-[5px]">
-              <img
-                src={"https://yumozhi.com/img/wechat.jpg"}
-                className={cls(styles["pay-qrcode"], styles["wechat-pay"])}
-              />
-              <p>微信</p>
-            </div>
-            <div className="mx-[5px]">
-              <img
-                src={"https://yumozhi.com/img/wechat.jpg"}
-                className={cls(styles["pay-qrcode"], styles["ali-pay"])}
-              />
-              <p>支付宝</p>
-            </div>
+            <img src="/images/wx.jpg" className={styles["pay-qrcode"]} />
+            <img src="/images/alipay.jpg" className={styles["pay-qrcode"]} />
           </div>
         </div>
         <Divider />

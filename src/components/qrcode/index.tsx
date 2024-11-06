@@ -1,5 +1,5 @@
 "use client";
 
-import QRCode from "qrcode.react";
+import { QRCodeCanvas } from "qrcode.react";
 
-export default QRCode;
+export default QRCodeCanvas;

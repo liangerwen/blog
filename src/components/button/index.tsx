@@ -21,7 +21,7 @@ export default function Button(
       className={cls(
         styles["lew-button"],
         block && styles["lew-button__block"],
-        icon && emptyChildren && styles["lew-button__icon-only"],
+        !!icon && emptyChildren && styles["lew-button__icon-only"],
         className
       )}
       onClick={onClick}

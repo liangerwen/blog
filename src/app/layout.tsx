@@ -9,6 +9,8 @@ import { cookies } from "next/headers";
 import { parse } from "../utils/json";
 import { THEME_KEY, ThemeType } from "../constants/theme";
 import Script from "next/script";
+import Head from "next/head";
+import Link from "next/link";
 
 import "./styles/index.scss";
 
@@ -27,6 +29,13 @@ export default function RootLayout({
   const theme = cookie ? parse(cookie.value) : ThemeType.LIGHT;
   return (
     <html lang="zh-CN" data-theme={theme}>
+      <Head>
+        <Link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"
+        />
+      </Head>
       <Script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" />
       <Script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" />
       <body className={cls(space_mono.className, "relative")}>

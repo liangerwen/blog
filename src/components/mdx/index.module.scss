@@ -50,6 +50,9 @@
   border-spacing: 0;
   border-collapse: collapse;
   empty-cells: show;
+  display: block;
+  width: 100%;
+  overflow-x: auto;
   .mdx-thead {
     background: rgba(153, 169, 191, 0.1);
   }

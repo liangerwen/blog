@@ -2,27 +2,21 @@
 
 import { useMDXComponent } from "next-contentlayer/hooks";
 import type { MDXComponents } from "mdx/types";
-import {
-  ComponentProps,
-  ElementType,
-  createElement,
-  useEffect,
-  useRef,
-} from "react";
-import { Fancybox as NativeFancybox } from "@fancyapps/ui";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
-
+import { ComponentProps, createElement, useEffect, useRef } from "react";
 import Tabs, { TabItem } from "../tabs";
 import Pre from "./pre";
 import Icon from "../icon";
 import Button from "../button";
 import BlockCode from "../block-code";
 import cls from "classnames";
-
-import styles from "./index.module.scss";
-import { fira_code, titillium_web } from "@/src/app/fonts";
+import { titillium_web } from "@/src/app/fonts";
 import Code from "./code";
 import Divider from "../divider";
+import { Fancybox } from "@fancyapps/ui";
+
+import styles from "./index.module.scss";
+
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 type H = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 
@@ -43,25 +37,18 @@ const createHeadings = () => {
 };
 
 const createMdxElement = <T extends keyof JSX.IntrinsicElements>(
-  elements: (T | { element: T; className: string })[]
+  elements: (T | { element: T; className?: string })[]
 ): { [K in T]?: MDXComponents[K] } => {
   const ret: { [K in T]?: MDXComponents[K] } = {};
   elements.forEach((e) => {
-    if (typeof e === "string") {
-      // @ts-ignore
-      ret[e] = ({ className, ...props }: ComponentProps<T>) =>
-        createElement(e, {
-          className: cls(styles[`mdx-${e}`], className),
-          ...props,
-        });
-    } else {
-      // @ts-ignore
-      ret[e.element] = ({ className, ...props }: ComponentProps<T>) =>
-        createElement(e.element, {
-          className: cls(styles[`mdx-${e.element}`], e.className, className),
-          ...props,
-        });
-    }
+    const opt: { element: T; className?: string } =
+      typeof e === "string" ? { element: e } : e;
+    const Component = ({ className, ...props }: ComponentProps<T>) =>
+      createElement(opt.element, {
+        className: cls(styles[`mdx-${opt.element}`], opt.className, className),
+        ...props,
+      });
+    ret[opt.element] = Component as MDXComponents[T];
   });
   return ret;
 };
@@ -81,21 +68,11 @@ const components: MDXComponents = {
     "ol",
     "li",
     "input",
+    "img",
   ]),
   code: Code,
   pre: Pre,
   hr: Divider,
-  img: ({ src, className, ...props }) => {
-    return (
-      <a data-fancybox="post" href={src}>
-        <img
-          src={src}
-          className={cls(styles["mdx-img"], className)}
-          {...props}
-        />
-      </a>
-    );
-  },
   Button,
   Tabs,
   Tab: TabItem,
@@ -109,15 +86,14 @@ interface MdxProps {
 
 export default function Mdx({ code }: MdxProps) {
   const Component = useMDXComponent(code);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const container = containerRef.current;
-
-    NativeFancybox.bind(container, "[data-fancybox]");
-
+    Fancybox.bind(container, "img", { groupAll: true });
     return () => {
-      NativeFancybox.unbind(container);
-      NativeFancybox.close();
+      Fancybox.unbind(container);
+      Fancybox.close();
     };
   }, []);
 

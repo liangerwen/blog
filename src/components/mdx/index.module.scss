@@ -71,13 +71,11 @@
 }
 .mdx-img {
   margin-bottom: 16px;
+  cursor: pointer;
 }
 .mdx-ul {
   margin-bottom: 16px;
-  .mdx-li {
-    position: relative;
-    margin: 0.3rem 0;
-    padding: 0.12rem 0.4rem 0.12rem 1.4rem;
+  > .mdx-li {
     &::before {
       position: absolute;
       top: 0.8rem;
@@ -92,26 +90,17 @@
     &:hover::before {
       border-color: var(--button-hover-bg);
     }
-    .mdx-ul {
-      margin-bottom: 0;
-      margin-top: 0.6rem;
-    }
-    .mdx-p {
-      margin-bottom: 0;
-    }
   }
 }
 .mdx-ol {
   margin-bottom: 16px;
   counter-reset: li;
-  .mdx-li {
+  > .mdx-li {
     list-style: none;
-    padding: 0.12rem 0.4rem 0.12rem 1.8rem;
-    margin: 0.3rem 0;
-    position: relative;
+    padding-left: 1.8rem;
     &::before {
       position: absolute;
-      top: 0.4rem;
+      top: 0.6rem;
       left: 0;
       display: inline-block;
       width: 1.1rem;
@@ -130,13 +119,19 @@
     &:hover::before {
       transform: rotate(-360deg);
     }
-    .mdx-p {
-      margin-bottom: 0;
-    }
-    .mdx-ol {
-      margin-bottom: 0;
-      margin-top: 0.6rem;
-    }
+  }
+}
+.mdx-li {
+  position: relative;
+  margin: 0.3rem 0;
+  padding: 0.12rem 0.4rem 0.12rem 1.4rem;
+  .mdx-ul,
+  .mdx-ol {
+    margin-bottom: 0;
+    margin-top: 0.6rem;
+  }
+  .mdx-p {
+    padding: 0;
   }
 }
 .mdx-input[type="checkbox"] {

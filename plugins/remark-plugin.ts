@@ -1,5 +1,5 @@
 import { VFile } from "vfile";
-import { Parent } from "unist";
+import { Parent, Node } from "unist";
 import { visit } from "unist-util-visit";
 import { remark } from "remark";
 import { Heading } from "mdast";
@@ -47,17 +47,6 @@ export async function extractTocHeadings(markdown: string): Promise<Toc> {
   return vfile.data.toc;
 }
 
-export function remarkWordCount() {
-  return (tree: Parent, file: VFile) => {
-    let count = 0;
-    visit(tree, (node) => {
-      // @ts-ignore
-      count += (node?.value || "").replace(/\\n/, "").length;
-    });
-    file.data.wordCount = count;
-  };
-}
-
 export function remarkTextContent() {
   return (tree: Parent, file: VFile) => {
     let content = "";
@@ -71,14 +60,34 @@ export function remarkTextContent() {
   };
 }
 
-export async function getWordCount(markdown: string): Promise<number> {
-  const vfile = await remark().use(remarkWordCount).process(markdown);
-  // @ts-ignore
-  return vfile.data.wordCount;
-}
-
-export async function getTextContent(markdown: string): Promise<number> {
+export async function getTextContent(markdown: string): Promise<string> {
   const vfile = await remark().use(remarkTextContent).process(markdown);
   // @ts-ignore
   return vfile.data.textContent;
+}
+
+interface CodeNode extends Node {
+  lang?: string;
+  meta?: string;
+}
+
+/**
+ * Extracts code block's language and meta data and adds it to the code block's data object.
+ */
+export function remarkCodeMeta() {
+  return (tree: Parent) => {
+    visit(tree, "code", (node: CodeNode) => {
+      const metaObj = (node.meta ?? "").split(" ").reduce((acc, cur) => {
+        const [key, value] = cur.split("=");
+        acc[`data-${key}`] = value;
+        return acc;
+      }, {} as Record<string, string>);
+      node.data = Object.assign(node.data || {}, {
+        hProperties: {
+          ["data-lang"]: node.lang,
+          ...metaObj,
+        },
+      });
+    });
+  };
 }

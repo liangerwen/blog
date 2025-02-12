@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import {
   extractTocHeadings,
   getTextContent,
-  getWordCount,
+  remarkCodeMeta,
 } from "./plugins/remark-plugin";
 import fs from "fs";
 import { join } from "path";
@@ -13,7 +13,7 @@ import getRandomImageUrl from "./random.config";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
-  filePathPattern: `posts/**/*.mdx`,
+  filePathPattern: "posts/**/*.mdx",
   contentType: "mdx",
   fields: {
     title: {
@@ -47,7 +47,10 @@ export const Post = defineDocumentType(() => ({
     },
     wordCount: {
       type: "number",
-      resolve: (doc) => getWordCount(doc.body.raw),
+      resolve: (doc) =>
+        getTextContent(doc.body.raw).then(
+          (res) => res.replace(/[ \n]+/g, "").length
+        ),
     },
     textContent: {
       type: "string",
@@ -55,13 +58,18 @@ export const Post = defineDocumentType(() => ({
     },
     createTime: {
       type: "date",
-      resolve: (doc) =>
-        fs.statSync(join("data", doc._raw.sourceFilePath)).birthtime,
+      resolve: (doc) => {
+        console.log(doc.date);
+        return (
+          doc.date ??
+          fs.statSync(join("data", doc._raw.sourceFilePath)).birthtime
+        );
+      },
     },
     modifyTime: {
       type: "date",
       resolve: (doc) =>
-        fs.statSync(join("data", doc._raw.sourceFilePath)).mtime,
+        doc.lastmod ?? fs.statSync(join("data", doc._raw.sourceFilePath)).mtime,
     },
     title: {
       type: "string",
@@ -156,6 +164,11 @@ export const Config = defineDocumentType(() => ({
     juejin: {
       type: "string",
     },
+    links: {
+      type: "list",
+      of: { type: "json" },
+      default: [],
+    },
     post: {
       type: "json",
       default: {
@@ -181,7 +194,7 @@ export default makeSource({
   mdx: {
     cwd: process.cwd(),
     // 配置MDX解析器的插件
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkCodeMeta, remarkGfm],
     rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
   },
 });

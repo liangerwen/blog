@@ -1,15 +1,17 @@
+import React from "react";
 import config from "@/src/config";
 import Button from "../button";
 import { addToBookmark } from "@/src/utils/bookmark";
 import cls from "classnames";
 import Icon from "../icon";
+import Image from "../image";
 
 const hoverRotateClassName = "transition duration-300 hover:rotate-[360deg]";
 
 export default function AuthorCard() {
   return (
     <div className="card px-[24px] py-[20px] text-center">
-      <img
+      <Image
         src={config.avatar}
         alt={config.name}
         className={cls(

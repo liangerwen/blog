@@ -1,3 +1,5 @@
+"use client";
+
 import { fira_code } from "@/src/app/fonts";
 import hljs from "highlight.js";
 import { ComponentProps, useState } from "react";
@@ -16,12 +18,14 @@ type BlockCodeProps = Omit<
 > & {
   code: string;
   language?: string;
+  title?: string;
 };
 
 export default function BlockCode({
   className,
   code,
   language,
+  title,
   ...props
 }: BlockCodeProps) {
   const [expend, setExpend] = useState(false);
@@ -37,17 +41,34 @@ export default function BlockCode({
     ).value;
   } catch {}
 
-  const lines = innerHtml.split(/\n/).slice(0, -1);
+  const lines = innerHtml.split(/\n/);
+  // 去除空白尾行
+  if (!lines[lines.length - 1]) {
+    lines.pop();
+  }
   const html = `<ol class="${styles["code-list"]}">${(expend
     ? lines
     : lines.slice(0, expendLine)
   )
-    .map(
-      (item, index) =>
-        `<li><i class=${styles["code-line"]} style="width: ${
-          lines.length.toString().length * 8 + 20
-        }px">${index + 1}</i>${item}</li>`
-    )
+    .map((item, index) => {
+      const delLine = item.startsWith("[-]");
+      const addLine = item.startsWith("[+]");
+      if (delLine) {
+        item = `<span style="color:rgb(239, 68, 68)">- </span>${item
+          .split("[-]")[1]
+          .trim()}`;
+      } else if (addLine) {
+        item = `<span style="color:rgb(34, 197, 94)">+ </span>${item
+          .split("[+]")[1]
+          .trim()}`;
+      }
+      return `<li class="${cls(styles["code-line"], {
+        [styles["code-line__del"]]: delLine,
+        [styles["code-line__add"]]: addLine,
+      })}"><i class="${styles["code-line-idx"]}" style="width: ${
+        lines.length.toString().length * 8 + 20
+      }px">${index + 1}</i>${item}</li>`;
+    })
     .join("")}</ol>`;
 
   return (
@@ -62,9 +83,14 @@ export default function BlockCode({
             )}
             onClick={() => setShowCode((show) => !show)}
           />
-          <span className={styles["code-lang"]}>{(language || "code").toUpperCase()}</span>
+          <span className={styles["code-lang"]}>
+            {(language || "code").toUpperCase()}
+          </span>
         </div>
-        <Copy content={code} />
+        <div className="flex gap-1 items-center">
+          <span>{title}</span>
+          <Copy content={code} />
+        </div>
       </div>
       {showCode && (
         <div

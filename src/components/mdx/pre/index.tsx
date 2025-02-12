@@ -8,32 +8,29 @@ import BlockCode from "../../block-code";
 
 import styles from "./index.module.scss";
 
-const getLanguageByClassName = (className?: string) => {
-  const start = "language-";
-  return className
-    ?.split(" ")
-    .find((c) => c.startsWith(start))
-    ?.split(start)?.[1];
-};
-
 const Pre: Required<MDXComponents>["pre"] = ({
   children,
   className,
-  ...props
+  ...rest
 }) => {
   const renderChildren = (children: ReactNode) => {
     if (
-      isValidElement<ComponentProps<"code">>(children) &&
+      isValidElement<
+        ComponentProps<"code"> & {
+          "data-lang": string;
+          "data-title": string;
+        }
+      >(children) &&
       children.type === Code
     ) {
       const { className: codeCls, children: child, ...props } = children.props;
       if (typeof child === "string") {
-        const language = getLanguageByClassName(codeCls);
         return (
           <BlockCode
             className="highlight-code"
             code={child}
-            language={language}
+            language={props["data-lang"]}
+            title={props["data-title"]}
             {...props}
           />
         );
@@ -42,7 +39,7 @@ const Pre: Required<MDXComponents>["pre"] = ({
     return children;
   };
   return (
-    <pre className={cls(styles["mdx-pre"], className)} {...props}>
+    <pre className={cls(styles["mdx-pre"], className)} {...rest}>
       {renderChildren(children)}
     </pre>
   );

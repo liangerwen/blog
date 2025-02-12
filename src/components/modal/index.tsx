@@ -1,85 +1,93 @@
 "use client";
 
-import { ReactNode, memo } from "react";
-// @ts-ignore
-import Dialog from "rc-dialog";
+import React, { ReactNode, memo } from "react";
+import Dialog, { DialogProps } from "rc-dialog";
+import Icon from "../icon";
+import cls from "classnames";
 
 import styles from "./index.module.scss";
 
 import "./rc-modal.scss";
 
-export type ModalProps = {
+export interface ModalProps
+  extends Omit<
+    DialogProps,
+    "title" | "onClose" | "closable" | "footer" | "animation" | "maskAnimation"
+  > {
   onConfirm?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onCancel?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title?: string;
   confirmText?: string;
   cancelText?: string;
-  visible?: boolean;
-  maskClosable?: boolean;
-  keyboard?: boolean;
   closable?: boolean;
-  destroyOnClose?: boolean;
-  children: ReactNode;
-  afterClose?: () => void;
-};
+  className?: string;
+  footer?: false | ReactNode;
+}
 
 const Modal = ({
-  title = "标题",
+  title,
   onConfirm,
   onCancel,
-  afterClose,
   children,
   confirmText = "确认",
   cancelText = "取消",
-  visible = false,
-  maskClosable = true,
-  keyboard = true,
   closable = true,
-  destroyOnClose = false,
+  className,
+  wrapClassName,
+  footer = true,
+  ...rest
 }: ModalProps) => {
-  const renderFooter = () => (
-    <div className={styles["lew-modal-footer"]}>
-      {closable && (
-        <button
-          className={styles["lew-modal-footer-button"]}
-          onClick={(e) => {
-            onCancel?.(e);
-          }}
-        >
-          {cancelText}
-        </button>
-      )}
-      <button
-        className={styles["lew-modal-footer-button"]}
-        onClick={(e) => {
-          onConfirm?.(e);
-        }}
-      >
-        {confirmText}
-      </button>
-    </div>
-  );
+  const renderFooter = () => {
+    if (footer === false) {
+      return null;
+    }
+    if (footer === true) {
+      return (
+        <div className={styles["lew-modal-footer"]}>
+          {closable && (
+            <button
+              className={styles["lew-modal-footer-button"]}
+              onClick={(e) => {
+                onCancel?.(e);
+              }}
+            >
+              {cancelText}
+            </button>
+          )}
+          <button
+            className={styles["lew-modal-footer-button"]}
+            onClick={(e) => {
+              onConfirm?.(e);
+            }}
+          >
+            {confirmText}
+          </button>
+        </div>
+      );
+    }
+    return footer;
+  };
 
   return (
     <Dialog
-      title={<h3 className={styles["lew-modal-title"]}>{title}</h3>}
       zIndex={888}
-      visible={visible}
-      onClose={() => {
-        onCancel?.();
-      }}
-      closable={false}
+      {...rest}
+      title={title && <h3 className={styles["lew-modal-title"]}>{title}</h3>}
+      onClose={() => onCancel?.()}
+      closable={
+        closable
+          ? {
+              closeIcon: <Icon icon="mingcute:close-fill" width={24} />,
+            }
+          : false
+      }
       footer={renderFooter()}
-      maskClosable={maskClosable}
-      keyboard={keyboard}
-      className={styles["lew-modal"]}
-      wrapClassName={styles["lew-modal-wrap"]}
+      className={cls(styles["lew-modal"], className)}
+      wrapClassName={cls(styles["lew-modal-wrap"], wrapClassName)}
       maskAnimation="fade"
       animation="zoom"
-      destroyOnClose={destroyOnClose}
-      afterClose={afterClose}
     >
-      <div className={styles["lew-modal-content"]}>{children}</div>
+      {children}
     </Dialog>
   );
 };

@@ -1,9 +1,10 @@
 "use client";
 
+import React from "react";
 import CoverBackground from "@/src/components/cover-background";
 import Footer from "@/src/components/footer";
 import MainContainer from "@/src/components/main-container";
-import Pagination from "@/src/components/pagination";
+import { PaginationWithHref } from "@/src/components/pagination";
 import cls from "classnames";
 import Link from "next/link";
 import config from "@/src/config";
@@ -16,6 +17,7 @@ import formatNumber from "@/src/utils/format-number";
 import { estimateReadTimeMinutes } from "@/src/utils/read-time";
 import dayjs from "dayjs";
 import Icon from "../icon";
+import Image from "../image";
 
 interface PageProps {
   current?: number;
@@ -62,28 +64,28 @@ export default function Page({ current = 1 }: PageProps) {
           <div
             key={post._id}
             className={cls(
-              "w-full flex card mb-[20px] h-[16.8em] md:h-auto cover-img-box md:flex-col",
+              "w-full flex card mb-[1.25rem] h-[16.8em] md:h-auto cover-img-box md:flex-col",
               idx % 2 === 1 && "flex-row-reverse"
             )}
           >
             <Link
               className={cls(
-                "bg-[#49b1f5] overflow-hidden w-[45%] h-full md:w-full md:h-[230px]"
+                "bg-[#49b1f5] overflow-hidden w-[45%] h-full md:w-full md:h-[14.375rem]"
               )}
               href={`/${post._raw.flattenedPath}`}
             >
-              <img className="cover-img" src={post.cover} alt="页面未找到" />
+              <Image className="cover-img" src={post.cover} alt="页面未找到" />
             </Link>
             <div
               className={cls(
                 titillium_web.className,
-                "bg-[var(--card-bg)] flex justify-center flex-col px-[40px] w-[55%] md:w-full md:p-[20px] md:pb-[30px]"
+                "bg-[var(--card-bg)] flex justify-center flex-col px-[2.5rem] w-[55%] md:w-full md:p-[1.25rem] md:pb-[1.875rem]"
               )}
             >
               <Link href={`/${post._raw.flattenedPath}`}>
                 <h2 className="line-clamp-1 break-all">{post.title}</h2>
               </Link>
-              <div className="my-[6px] text-[#858585]">
+              <div className="my-[0.375rem] text-[#858585]">
                 <Icon icon="icon-park-solid:word" className="mr-1" />
                 <span className="text-sm">
                   字数统计：
@@ -99,10 +101,7 @@ export default function Page({ current = 1 }: PageProps) {
                   ])}
                 </span>
                 <span className="mx-1">|</span>
-                <Icon
-                  icon="humbleicons:clock"
-                  className="mr-1"
-                />
+                <Icon icon="humbleicons:clock" className="mr-1" />
                 <span className="text-sm">
                   阅读时长：
                   {estimateReadTimeMinutes({
@@ -112,10 +111,7 @@ export default function Page({ current = 1 }: PageProps) {
                   分钟
                 </span>
                 <span className="mx-1">|</span>
-                <Icon
-                  icon="solar:calendar-bold-duotone"
-                  className="mr-1"
-                />
+                <Icon icon="solar:calendar-bold-duotone" className="mr-1" />
                 <span className="text-sm">
                   发表于：
                   {dayjs(post.createTime).format("YYYY-MM-DD")}
@@ -125,16 +121,11 @@ export default function Page({ current = 1 }: PageProps) {
             </div>
           </div>
         ))}
-        <Pagination total={allPosts.length} currentPage={current}>
-          {({ children, className, nextPage }) => {
-            const Element = nextPage === current ? "span" : Link;
-            return (
-              <Element className={className} href={`/page/${nextPage}`}>
-                {children}
-              </Element>
-            );
-          }}
-        </Pagination>
+        <PaginationWithHref
+          generateHref={(page) => `/pages/${page}`}
+          total={allPosts.length}
+          currentPage={current}
+        />
       </MainContainer>
       <Footer cover={config.cover} className="fade-move-up" />
     </>

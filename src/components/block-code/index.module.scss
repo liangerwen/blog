@@ -3,7 +3,6 @@
   background: var(--hltools-bg-color);
   color: var(--hltools-color);
   position: relative;
-  display: box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,17 +47,25 @@
     width: 100%;
     overflow: auto;
     ol.code-list {
-      width: fit-content;
-      margin: 8px 16px 8px 0;
+      margin: 0.5rem 0;
       list-style: none;
-      li > .code-line {
+      li > .code-line-idx {
         display: inline-block;
         color: var(--hlnumber-color);
-        padding: 0 10px;
-        margin-right: 10px;
+        padding: 0 0.625rem;
+        margin-right: 0.625rem;
         text-align: right;
-        font-size: 14px;
+        font-size: 0.875rem;
         user-select: none;
+      }
+      li.code-line {
+        padding-right: 1rem;
+      }
+      li.code-line__del {
+        background-color: rgba(239, 68, 68, 0.2);
+      }
+      li.code-line__add {
+        background-color: rgba(34, 197, 94, 0.2);
       }
     }
   }

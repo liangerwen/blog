@@ -28,8 +28,8 @@ export default function Toolbar() {
   return (
     <div
       className={cls(
-        "fixed flex flex-col bottom-[40px] transition duration-300 right-[20px] opacity-80",
-        y < 30 && "translate-x-[58px]"
+        "fixed flex flex-col bottom-[2.5rem] transition duration-300 right-[1.25rem] opacity-80",
+        y < 30 && "translate-x-[3.625rem]"
       )}
     >
       {actions.map((i) => (

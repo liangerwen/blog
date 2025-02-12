@@ -2,7 +2,7 @@
 
 import { useMDXComponent } from "next-contentlayer/hooks";
 import type { MDXComponents } from "mdx/types";
-import { ComponentProps, createElement, useEffect, useRef } from "react";
+import React, { ComponentProps, createElement, useEffect, useRef } from "react";
 import Tabs, { TabItem } from "../tabs";
 import Pre from "./pre";
 import Icon from "../icon";
@@ -12,6 +12,11 @@ import cls from "classnames";
 import { titillium_web } from "@/src/app/fonts";
 import Code from "./code";
 import Divider from "../divider";
+import YouTube from "../youtube";
+import Bilibili from "../bilibili";
+import StackBlitz from "../stackblitz";
+import CodeSandbox from "../codesandbox";
+import CodePen from "../codepen";
 import { Fancybox } from "@fancyapps/ui";
 
 import styles from "./index.module.scss";
@@ -78,6 +83,11 @@ const components: MDXComponents = {
   Tab: TabItem,
   Icon,
   BlockCode,
+  YouTube,
+  Bilibili,
+  StackBlitz,
+  CodeSandbox,
+  CodePen,
 };
 
 interface MdxProps {
@@ -98,7 +108,7 @@ export default function Mdx({ code }: MdxProps) {
   }, []);
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={styles["mdx"]}>
       <Component components={components} />
     </div>
   );

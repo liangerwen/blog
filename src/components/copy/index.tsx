@@ -18,7 +18,7 @@ export default function Copy({ content = "" }: CopyProps) {
   }, []);
 
   return copied ? (
-    <Icon icon="charm:tick" className="cursor-pointer text-[#4CD263]" />
+    <Icon icon="charm:tick" className="cursor-pointer !text-[#4CD263]" />
   ) : (
     <Icon
       icon="solar:copy-bold"

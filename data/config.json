@@ -45,6 +45,68 @@
     "github": "https://github.com/liangerwen",
     "gitee": "https://gitee.com/liang_er_da",
     "juejin": "https://juejin.cn/user/4051042477804423",
+    "links": [
+        {
+            "name": "Xiaojun Zhou",
+            "url": "https://www.xiaojun.im/",
+            "desc": "新生代农民工 / 金融消费者 / 共产主义接班人",
+            "avatar": "https://www.xiaojun.im/logo.svg"
+        },
+        {
+            "name": "戴兜",
+            "url": "https://im.daidr.me/",
+            "desc": "Coding the world.",
+            "avatar": "https://lsky.llx.life/i/2023/06/20/6491004478108.webp"
+        },
+        {
+            "name": "wallleap",
+            "url": "https://myblog.wallleap.cn/",
+            "desc": "Luwang's blog",
+            "avatar": "https://gravatar.wallleap.cn/avatar/be1ccdcf025a92b98a92e331e1b3662a?size=256"
+        },
+        {
+            "name": "freejishu的美丽世界",
+            "url": "http://www.freejishu.com/",
+            "desc": "Code · Thinking · ACG",
+            "avatar": "https://cdn-p.freejishu.com/img/2022/01/19/gNxI.jpg"
+        },
+        {
+            "name": "雪萌天文台",
+            "url": "https://blog.snowy.moe/",
+            "desc": "发现巷子里的那颗星星",
+            "avatar": "https://img.snowy.moe/head.png"
+        },
+        {
+            "name": "Akilarの糖果屋",
+            "url": "https://akilar.top/",
+            "desc": "期待您的光临！",
+            "avatar": "https://npm.elemecdn.com/akilar-friends@latest/avatar/akilar.top.jpg"
+        },
+        {
+            "name": "呆鱼",
+            "url": "https://daiyu.fun/",
+            "desc": "Hello World！",
+            "avatar": "https://daiyu.fun/img/avatar.png"
+        },
+        {
+            "name": "冰橘の小窝",
+            "url": "https://blog.moe233.net/",
+            "desc": "(⊙ω⊙)你找到我了",
+            "avatar": "https://blog.moe233.net/images/tangerine.png"
+        },
+        {
+            "name": "可执行程序の天境小屋🥝",
+            "url": "https://hanta.us.kg/",
+            "desc": "苦恼于空岛物资不足的学生党",
+            "avatar": "https://pic.imgdb.cn/item/65fe67989f345e8d03923ea6.jpg"
+        },
+        {
+            "name": "幻幻博客",
+            "url": "https://blog.xhxx.cc/",
+            "desc": "态度决定高度，加油努力奋斗！",
+            "avatar": "https://img.yzlt.site/i/2022/07/27/d90gol.webp"
+        }
+    ],
     "post": {
         "expendLine": 15,
         "pageSize": 10

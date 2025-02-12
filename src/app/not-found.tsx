@@ -1,5 +1,3 @@
-"use client";
-
 import MainContainer from "../components/main-container";
 import { titillium_web } from "./fonts";
 import cls from "classnames";
@@ -11,7 +9,7 @@ export default function NotFound() {
       rootClassName="h-screen"
       className={cls("flex justify-center items-center")}
     >
-      <div className="max-w-[920px] h-[360px] w-full flex card md:flex-col md:h-[500px]">
+      <div className="max-w-[57.5rem] h-[22.5rem] w-full flex card md:flex-col md:h-[31.25rem]">
         <div className="bg-[#49b1f5] cover-img-box w-1/2 h-full md:w-full md:h-[45%]">
           <img className="cover-img" src="/images/404.png" alt="页面未找到" />
         </div>

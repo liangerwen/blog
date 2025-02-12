@@ -1,3 +1,4 @@
+import React from "react";
 import { headers } from "next/headers";
 import styles from "./index.module.scss";
 import { notFound } from "next/navigation";
@@ -17,6 +18,9 @@ import MainContainer from "@/src/components/main-container";
 import dayjs from "dayjs";
 import { allPosts } from "@/src/data";
 import { estimateReadTimeMinutes } from "@/src/utils/read-time";
+import Link from "next/link";
+import { type Post } from "@/.contentlayer/generated";
+import Image from "@/src/components/image";
 
 export const generateStaticParams = async () => {
   const paths = allPosts.map((p) => ({ slug: p.slug.split("/") }));
@@ -35,9 +39,9 @@ export async function generateMetadata({
   }
 
   return {
-    title: post.title,
+    title: `${post.title} | ${config.title}`,
     description: post.description,
-    applicationName: "liangerwen's blog",
+    applicationName: config.title,
     authors: [{ name: config.name, url: config.github }],
     keywords: [post.title],
   };
@@ -47,19 +51,39 @@ interface IProps {
   params: { slug: string[] };
 }
 
+const renderLinkPost = (post: Post) =>
+  post && (
+    <Link
+      className="flex-1 cover-img-box overflow-hidden relative flex items-center justify-center no-underline"
+      href={`/${post._raw.flattenedPath}`}
+    >
+      <Image
+        className="cover-img absolute size-full brightness-50"
+        src={post.cover}
+        alt={post.title}
+      />
+      <span className="z-10 text-xl font-semibold text-[--button-color]">
+        {post.title}
+      </span>
+    </Link>
+  );
+
 export default function Post({ params }: IProps) {
   const slug = decodeURI(params.slug.join("/"));
-  const post = allPosts.find((p) => p.slug === slug);
+  const postIdx = allPosts.findIndex((p) => p.slug === slug);
+  const post = allPosts[postIdx];
   if (!post) return notFound();
   const currentUrl = headers().get("x-request-url")!;
+  const nextPost = allPosts[postIdx + 1];
+  const prevPost = allPosts[postIdx - 1];
 
   return (
     <>
       <CoverBackground cover={post.cover} element="header">
         <div className="px-[8%] text-white opacity-90">
           <h1 className="mb-[12px]">{post.title}</h1>
-          <div className="text-[var(--button-color)]">
-            <Icon icon="icon-park-solid:word" className="mr-1" />
+          <div className="text-[var(--button-color)] flex items-center justify-center gap-1">
+            <Icon icon="icon-park-solid:word" />
             <span className="text-sm">
               字数统计：
               {formatNumber(post.wordCount, [
@@ -73,15 +97,15 @@ export default function Post({ params }: IProps) {
                 },
               ])}
             </span>
-            <span className="mx-1">|</span>
-            <Icon icon="solar:calendar-bold-duotone" className="mr-1" />
+            <span>|</span>
+            <Icon icon="lets-icons:time" />
             <span className="text-sm">
               阅读时长：
               {estimateReadTimeMinutes({ text: post.textContent, wpm: 180 })}
               分钟
             </span>
-            <span className="mx-1">|</span>
-            <Icon icon="solar:calendar-bold-duotone" className="mr-1" />
+            <span>|</span>
+            <Icon icon="solar:calendar-bold-duotone" />
             <span className="text-sm">
               发表于：
               {dayjs(post.createTime).format("YYYY-MM-DD")}
@@ -90,7 +114,7 @@ export default function Post({ params }: IProps) {
         </div>
       </CoverBackground>
       <MainContainer
-        className="card px-[40px] py-[50px] md:px-[14px] md:py-[36px]"
+        className="card p-10 md:p-5"
         rootClassName="fade-move-up"
         toc={post.toc}
       >
@@ -227,9 +251,13 @@ export default function Post({ params }: IProps) {
             打赏
           </Button>
           <div className={styles["exceptional-qrcode"]}>
-            <img src="/images/wx.jpg" className={styles["pay-qrcode"]} />
-            <img src="/images/alipay.jpg" className={styles["pay-qrcode"]} />
+            <Image src="/images/wx.jpg" className={styles["pay-qrcode"]} />
+            <Image src="/images/alipay.jpg" className={styles["pay-qrcode"]} />
           </div>
+        </div>
+        <div className="flex flex-row lg:flex-col h-36 overflow-hidden">
+          {renderLinkPost(prevPost)}
+          {renderLinkPost(nextPost)}
         </div>
         <Divider />
         <Waline />

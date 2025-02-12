@@ -1,3 +1,12 @@
+.mdx {
+  & > * + * {
+    margin-top: 1rem;
+  }
+  .mdx-img {
+    cursor: pointer;
+  }
+}
+
 .mdx-heading {
   color: var(--header-text-color);
   margin: 20px 0 14px 0;
@@ -12,8 +21,11 @@
 }
 
 @for $i from 1 through 6 {
-  .mdx-heading-#{$i}::before {
-    content: "H" + $i;
+  .mdx-heading-#{$i} {
+    margin-bottom: 0;
+    &::before {
+      content: "H" + $i;
+    }
   }
 }
 
@@ -31,19 +43,13 @@
 .mdx-p,
 .mdx-span {
   line-height: 2;
-  margin-bottom: 16px;
   font-size: 1.1rem;
   word-break: break-all;
 }
 .mdx-blockquote {
-  margin-bottom: 20px;
-  padding: 2px 16px;
+  padding: 8px 16px;
   border-left: 4px solid var(--button-bg);
   background-color: var(--post-blockquote-bg-color);
-  .mdx-p {
-    padding: 10px 0;
-    margin: 0;
-  }
 }
 .mdx-table {
   min-width: 100%;
@@ -69,35 +75,27 @@
   padding: 2px 4px;
   font-size: 1rem;
 }
-.mdx-img {
-  margin-bottom: 16px;
-  cursor: pointer;
-}
 .mdx-ul {
-  margin-bottom: 16px;
+  padding-left: 2rem;
   > .mdx-li {
-    &::before {
-      position: absolute;
-      top: 0.8rem;
-      left: 0;
-      width: 0.6rem;
-      height: 0.6rem;
-      border: 0.2rem solid var(--button-bg);
-      border-radius: 50%;
-      content: "";
-      transition: border-color 0.2s ease-in-out;
+    list-style-type: circle;
+    &::marker {
+      font-weight: 600;
+      font-size: 1.05em;
+      color: var(--button-bg);
     }
-    &:hover::before {
-      border-color: var(--button-hover-bg);
+    &:hover::marker {
+      color: var(--button-hover-bg);
     }
   }
 }
 .mdx-ol {
-  margin-bottom: 16px;
   counter-reset: li;
   > .mdx-li {
     list-style: none;
-    padding-left: 1.8rem;
+    position: relative;
+    margin: 0.3rem 0;
+    padding: 0.12rem 0.4rem 0.12rem 1.8rem;
     &::before {
       position: absolute;
       top: 0.6rem;
@@ -122,12 +120,8 @@
   }
 }
 .mdx-li {
-  position: relative;
-  margin: 0.3rem 0;
-  padding: 0.12rem 0.4rem 0.12rem 1.4rem;
   .mdx-ul,
   .mdx-ol {
-    margin-bottom: 0;
     margin-top: 0.6rem;
   }
   .mdx-p {

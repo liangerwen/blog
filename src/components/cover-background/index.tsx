@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import cls from "classnames";
 import Icon from "../icon";
-import {useMediaQuery} from "usehooks-ts";
+import { useMediaQuery } from "usehooks-ts";
 
 export interface CoverBackgroundProps {
   element?: "div" | "footer" | "header";
@@ -22,7 +22,7 @@ export default function CoverBackground({
   position = "center",
   className,
 }: CoverBackgroundProps) {
-  const isMoblie = useMediaQuery("(max-width: 768px)")
+  const isMoblie = useMediaQuery("(max-width: 768px)");
   return (
     <Element
       className={cls(

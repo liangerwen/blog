@@ -5,8 +5,9 @@ import React, { ReactNode, memo, useMemo } from "react";
 
 import styles from "./index.module.scss";
 import Icon from "../icon";
+import Link from "next/link";
 
-type IProps = {
+export type PaginationProps = {
   currentPage?: number;
   total: number;
   limit?: number;
@@ -23,7 +24,7 @@ type IProps = {
   }) => ReactNode;
 };
 
-const Pagination: React.FC<IProps> = ({
+const Pagination: React.FC<PaginationProps> = ({
   currentPage = 1,
   total,
   limit = 10,
@@ -37,7 +38,7 @@ const Pagination: React.FC<IProps> = ({
     return remainder === 0 ? _total / limit : Math.floor(_total / limit) + 1;
   }, [total, limit]);
 
-  const defaultRenderItem: IProps["children"] = ({
+  const defaultRenderItem: PaginationProps["children"] = ({
     children,
     className,
     nextPage,
@@ -127,5 +128,25 @@ const Pagination: React.FC<IProps> = ({
     )
   );
 };
+
+export const PaginationWithHref = ({
+  total,
+  currentPage,
+  generateHref,
+  ...rest
+}: Omit<PaginationProps, "children"> & {
+  generateHref: (page: number) => string;
+}) => (
+  <Pagination total={total} currentPage={currentPage} {...rest}>
+    {({ children, className, nextPage }) => {
+      const Element = nextPage === currentPage ? "span" : Link;
+      return (
+        <Element className={className} href={generateHref(nextPage)}>
+          {children}
+        </Element>
+      );
+    }}
+  </Pagination>
+);
 
 export default memo(Pagination);

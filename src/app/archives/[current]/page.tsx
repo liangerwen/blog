@@ -82,7 +82,13 @@ export default function Archives({ params }: PageProps) {
     .flat();
   return (
     <>
-      <CoverBackground cover="/images/rixiang.png" element="header" />
+      <CoverBackground
+        cover="/images/rixiang.png"
+        element="header"
+        className="flex items-center justify-center"
+      >
+        <h1 className="text-white opacity-90 font-bold text-6xl">归档</h1>
+      </CoverBackground>
       <MainContainer className="card p-10 md:p-5" rootClassName="fade-move-up">
         <Timeline items={items} title={`全部文章-共${allPosts.length}篇`} />
         <PaginationWithArchives total={allPosts.length} currentPage={page} />

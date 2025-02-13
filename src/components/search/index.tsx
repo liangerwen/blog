@@ -90,7 +90,7 @@ const Search = ({
     <>
       {cloneElement(trigger, { onClick: () => setOpen(true) })}
       <Modal
-        className="w-[600px] md:w-[95vw] max-h-[80vh] md:max-h-[98vh] md:h-[98vh] absolute top-12 md:relative md:top-0"
+        className="w-[600px] md:w-screen max-h-[80vh] md:max-h-screen md:h-screen absolute top-12 md:relative md:top-0"
         title={title}
         visible={open}
         onCancel={() => setOpen(false)}

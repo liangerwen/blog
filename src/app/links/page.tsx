@@ -6,9 +6,10 @@ import config from "@/src/config";
 import Link from "next/link";
 import Image from "@/src/components/image";
 import Waline from "@/src/components/waline";
-import Divider from "@/src/components/divider";
-import BlockCode from "@/src/components/block-code";
 import { Metadata } from "next";
+import Mdx from "@/src/components/mdx";
+import { links } from "@/src/data";
+import Divider from "@/src/components/divider";
 
 export const metadata: Metadata = {
   title: `友链 | ${config.name}`,
@@ -17,7 +18,13 @@ export const metadata: Metadata = {
 export default function Links() {
   return (
     <>
-      <CoverBackground cover="/images/nezha.png" element="header" />
+      <CoverBackground
+        cover={links?.cover}
+        element="header"
+        className="flex items-center justify-center"
+      >
+        <h1 className="text-white opacity-90 font-bold text-6xl">友链</h1>
+      </CoverBackground>
       <MainContainer className="card p-10 md:p-5" rootClassName="fade-move-up">
         <div className="grid grid-cols-3 moblie:grid-cols-1 pad:grid-cols-2 gap-2">
           {config.links.map((link, index) => (
@@ -44,19 +51,15 @@ export default function Links() {
           ))}
         </div>
         <Divider />
-        <BlockCode
-          title="申请友链格式如下（在下方评论）"
-          code={[
-            "name: liangerwen",
-            "url: https://blog-nine-navy-52.vercel.app/",
-            "avatar: https://blog-nine-navy-52.vercel.app/images/avatar.jpg",
-            "desc: 这瓜娃子懒得很，什么都没有留哈",
-          ].join("\n")}
-        />
-        <Divider />
-        <Waline />
+        <Mdx code={links?.body?.code!} />
+        {links?.comment && (
+          <>
+            <Divider />
+            <Waline />
+          </>
+        )}
       </MainContainer>
-      <Footer cover="/images/nezha.png" className="fade-move-up" />
+      <Footer cover={links?.cover} className="fade-move-up" />
     </>
   );
 }

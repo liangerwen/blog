@@ -50,7 +50,7 @@
             "name": "Xiaojun Zhou",
             "url": "https://www.xiaojun.im/",
             "desc": "新生代农民工 / 金融消费者 / 共产主义接班人",
-            "avatar": "https://www.xiaojun.im/logo.svg"
+            "avatar": "https://www.xiaojun.im/avatar.png"
         },
         {
             "name": "泰罗",
@@ -63,6 +63,12 @@
             "url": "https://liliya-site.vercel.app/",
             "desc": "柠檬味桃子汽水",
             "avatar": "https://avatars.githubusercontent.com/u/50412437?s=400&u=308833608ef36baa60f51d695d18fc6159cfc6c5&v=4"
+        },
+        {
+            "name": "赖同学",
+            "url": "https://www.laibh.com/",
+            "desc": "这个家伙很懒，什么东西都没有留下",
+            "avatar": "https://www.laibh.com/favicon.ico"
         },
         {
             "name": "戴兜",

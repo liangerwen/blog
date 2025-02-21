@@ -2,7 +2,6 @@ import React, {
   useState,
   ReactElement,
   cloneElement,
-  Suspense,
   useDeferredValue,
   useMemo,
 } from "react";
@@ -46,7 +45,7 @@ const Search = ({
           ) : (
             <>
               {idx === 0 ? i.slice(-2) : i}
-              <span className={styles.searchActive}>{deferredSearch}</span>
+              <span className={styles["search-active"]}>{deferredSearch}</span>
             </>
           );
         })}
@@ -61,18 +60,18 @@ const Search = ({
     if (result.length > 0) {
       return (
         <>
-          <div className={styles.searchResult}>
+          <div className={styles["search-result"]}>
             {result.map((i) => (
               <Link
-                className={cls(styles.resultItem, "no-underline")}
+                className={cls(styles["result-item"], "no-underline")}
                 key={i.title}
                 href={`/${i._raw.flattenedPath}`}
                 onClick={() => setOpen(false)}
               >
-                <p className={styles.resultItemTitle}>
+                <p className={styles["result-item-title"]}>
                   {resultTextRender(i.title)}
                 </p>
-                <p className={styles.resultItemContent}>
+                <p className={styles["result-item-content"]}>
                   {resultTextRender(i.textContent)}
                 </p>
               </Link>
@@ -100,10 +99,10 @@ const Search = ({
           flexDirection: "column",
         }}
       >
-        <div className={styles.modalContent}>
+        <div className={styles["modal-content"]}>
           <input
             type="text"
-            className={styles.searchInput}
+            className={styles["search-input"]}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -111,9 +110,7 @@ const Search = ({
             placeholder="请输入搜索内容"
           />
           <Divider className="!my-6" />
-          <Suspense fallback={<h2>Loading...</h2>}>
-            {resultListRender()}
-          </Suspense>
+          {resultListRender()}
         </div>
       </Modal>
     </>

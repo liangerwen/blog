@@ -53,10 +53,28 @@
             "avatar": "https://www.xiaojun.im/logo.svg"
         },
         {
+            "name": "泰罗",
+            "url": "https://www.taroblog.top/",
+            "desc": "其生若浮其死若休",
+            "avatar": "https://www.taroblog.top/icon.png"
+        },
+        {
+            "name": "莉莉娅",
+            "url": "https://liliya-site.vercel.app/",
+            "desc": "柠檬味桃子汽水",
+            "avatar": "https://avatars.githubusercontent.com/u/50412437?s=400&u=308833608ef36baa60f51d695d18fc6159cfc6c5&v=4"
+        },
+        {
             "name": "戴兜",
             "url": "https://im.daidr.me/",
             "desc": "Coding the world.",
             "avatar": "https://lsky.llx.life/i/2023/06/20/6491004478108.webp"
+        },
+        {
+            "name": "远川",
+            "url": "https://crazystudent13.cn/",
+            "desc": "CrazyStudent13，网名远川，前端资深开发人",
+            "avatar": "https://crazystudent13.cn/images/avatar.png"
         },
         {
             "name": "wallleap",

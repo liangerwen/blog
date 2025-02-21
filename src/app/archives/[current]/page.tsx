@@ -83,7 +83,7 @@ export default function Archives({ params }: PageProps) {
   return (
     <>
       <CoverBackground
-        cover="/images/rixiang.png"
+        cover="/images/bg/fangjian.png"
         element="header"
         className="flex items-center justify-center"
       >
@@ -93,7 +93,7 @@ export default function Archives({ params }: PageProps) {
         <Timeline items={items} title={`全部文章-共${allPosts.length}篇`} />
         <PaginationWithArchives total={allPosts.length} currentPage={page} />
       </MainContainer>
-      <Footer cover="/images/rixiang.png" className="fade-move-up" />
+      <Footer cover="/images/bg/fangjian.png" className="fade-move-up" />
     </>
   );
 }

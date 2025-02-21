@@ -1,9 +1,9 @@
-.modalContent {
+.modal-content {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   height: 100%;
-  .searchInput {
+  .search-input {
     width: 100%;
     outline: none;
     border: 2px solid var(--primary-color);
@@ -14,15 +14,15 @@
     box-sizing: border-box;
     flex-shrink: 0;
   }
-  .searchResult {
+  .search-result {
     flex: 1;
     width: 100%;
     overflow-y: auto;
-    .resultItem {
-      &:hover .resultItemTitle::before {
+    .result-item {
+      &:hover .result-item-title::before {
         border-color: #ff7242;
       }
-      .resultItemTitle {
+      .result-item-title {
         padding-left: 25px;
         position: relative;
         font-weight: 600;
@@ -45,11 +45,11 @@
           color: #49b1f5;
         }
       }
-      .searchActive {
+      .search-active {
         color: #f47466;
         font-weight: 700;
       }
-      .resultItemContent {
+      .result-item-content {
         margin-left: 26px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -63,8 +63,8 @@
 }
 
 @media screen and (max-width: 768px) {
-  .modalContent {
-    .searchResult {
+  .modal-content {
+    .search-result {
       max-height: calc(100vh - 135px);
       height: calc(100vh - 135px);
     }

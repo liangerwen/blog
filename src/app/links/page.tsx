@@ -41,10 +41,15 @@ export default function Links() {
                   className="size-16 rounded-full"
                 />
                 <div className="flex flex-col gap-1 justify-center overflow-hidden">
-                  <span className="text-lg font-bold truncate">
+                  <span
+                    className="text-lg font-bold truncate"
+                    title={link.name}
+                  >
                     {link.name}
                   </span>
-                  <span className="text-xs truncate">{link.desc}</span>
+                  <span className="text-xs truncate" title={link.desc}>
+                    {link.desc}
+                  </span>
                 </div>
               </div>
             </Link>

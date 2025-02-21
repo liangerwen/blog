@@ -1,9 +1,13 @@
+"use client";
+
 import React, {
   useState,
   ReactElement,
   cloneElement,
   useDeferredValue,
   useMemo,
+  useEffect,
+  useRef,
 } from "react";
 import { allPosts } from "@/src/data";
 import Link from "next/link";
@@ -24,6 +28,7 @@ const Search = ({
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const deferredSearch = useDeferredValue(search);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const result = useMemo(
     () =>
@@ -85,6 +90,14 @@ const Search = ({
     return <p>找不到符合条件的文章：{deferredSearch}</p>;
   };
 
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+    }
+  }, [open]);
+
   return (
     <>
       {cloneElement(trigger, { onClick: () => setOpen(true) })}
@@ -94,9 +107,11 @@ const Search = ({
         visible={open}
         onCancel={() => setOpen(false)}
         footer={false}
-        bodyStyle={{
-          display: "flex",
-          flexDirection: "column",
+        styles={{
+          body: {
+            display: "flex",
+            flexDirection: "column",
+          },
         }}
       >
         <div className={styles["modal-content"]}>
@@ -108,6 +123,7 @@ const Search = ({
               setSearch(e.target.value);
             }}
             placeholder="请输入搜索内容"
+            ref={inputRef}
           />
           <Divider className="!my-6" />
           {resultListRender()}

@@ -83,7 +83,9 @@ const Modal = ({
       }
       footer={renderFooter()}
       className={cls(styles["lew-modal"], className)}
-      wrapClassName={cls(styles["lew-modal-wrap"], wrapClassName)}
+      classNames={{
+        wrapper: cls(styles["lew-modal-wrap"], wrapClassName),
+      }}
       maskAnimation="fade"
       animation="zoom"
     >

@@ -59,7 +59,6 @@ export const Post = defineDocumentType(() => ({
     createTime: {
       type: "date",
       resolve: (doc) => {
-        console.log(doc.date);
         return (
           doc.date ??
           fs.statSync(join("data", doc._raw.sourceFilePath)).birthtime
@@ -69,7 +68,9 @@ export const Post = defineDocumentType(() => ({
     modifyTime: {
       type: "date",
       resolve: (doc) =>
-        doc.lastmod ?? fs.statSync(join("data", doc._raw.sourceFilePath)).mtime,
+        doc.lastmod ??
+        doc.date ??
+        fs.statSync(join("data", doc._raw.sourceFilePath)).mtime,
     },
     title: {
       type: "string",

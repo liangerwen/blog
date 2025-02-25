@@ -59,7 +59,7 @@ export default function Archives({ params }: PageProps) {
           <div className="flex gap-2" key={p.title}>
             <Link
               href={`/${p._raw.flattenedPath}`}
-              className="cover-img-box w-20 overflow-hidden"
+              className="cover-img-box w-20 overflow-hidden flex-shrink-0"
             >
               <Image src={p.cover} className="cover-img" />
             </Link>

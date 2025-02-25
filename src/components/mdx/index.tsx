@@ -62,7 +62,6 @@ const components: MDXComponents = {
   ...createHeadings(),
   ...createMdxElement([
     "p",
-    "a",
     "span",
     { element: "blockquote", className: titillium_web.className },
     "table",
@@ -75,6 +74,22 @@ const components: MDXComponents = {
     "input",
     "img",
   ]),
+  a: ({ className, target, ...props }) => {
+    return (
+      <a
+        className={cls(styles["mdx-a"], className)}
+        target={target ?? "_blank"}
+        {...props}
+      />
+    );
+  },
+  table: ({ className, ...props }) => {
+    return (
+      <div className="w-full overflow-x-auto">
+        <table className={cls(styles["mdx-table"], className)} {...props} />
+      </div>
+    );
+  },
   code: Code,
   pre: Pre,
   hr: Divider,

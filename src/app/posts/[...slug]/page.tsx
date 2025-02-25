@@ -32,7 +32,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string[] };
 }): Promise<Metadata | undefined> {
-  const slug = decodeURI(params.slug.join("/"));
+  const slug = decodeURIComponent(params.slug.join("/"));
   const post = allPosts.find((p) => p.slug === slug);
   if (!post) {
     return;
@@ -62,14 +62,14 @@ const renderLinkPost = (post: Post) =>
         src={post.cover}
         alt={post.title}
       />
-      <span className="z-10 text-xl font-semibold text-[--button-color]">
+      <span className="z-10 text-xl font-semibold text-[--button-color] text-center">
         {post.title}
       </span>
     </Link>
   );
 
 export default function Post({ params }: IProps) {
-  const slug = decodeURI(params.slug.join("/"));
+  const slug = decodeURIComponent(params.slug.join("/"));
   const postIdx = allPosts.findIndex((p) => p.slug === slug);
   const post = allPosts[postIdx];
   if (!post) return notFound();

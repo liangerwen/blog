@@ -25,8 +25,12 @@ const configs = {
 export default async function getRandomImageUrl(type: keyof typeof configs) {
   const cfg = configs[type];
   const idx = Math.floor(Math.random() * cfg.length);
-  const url = `${cfg[idx]}?json`;
-  const res = await fetch(url);
-  const data = await res.text();
-  return data ?? cfg[idx];
+  try {
+    const url = `${cfg[idx]}?json`;
+    const res = await fetch(url);
+    const data = await res.text();
+    return data ?? cfg[idx];
+  } catch {
+    return cfg[idx];
+  }
 }

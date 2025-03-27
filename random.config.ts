@@ -22,6 +22,9 @@ const configs = {
   ],
 } as const;
 
+// 绕过证书已过期的问题
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 export default async function getRandomImageUrl(type: keyof typeof configs) {
   const cfg = configs[type];
   const idx = Math.floor(Math.random() * cfg.length);

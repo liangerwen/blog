@@ -33,6 +33,12 @@ export default function RootLayout({
           type="text/css"
           href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"
         />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS Feed"
+          href="/feed.xml"
+        />
       </head>
       <Script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" />
       <Script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" />

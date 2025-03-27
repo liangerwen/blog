@@ -5,6 +5,7 @@ import { addToBookmark } from "@/src/utils/bookmark";
 import cls from "classnames";
 import Icon from "../icon";
 import Image from "../image";
+import Link from "next/link";
 
 const hoverRotateClassName = "transition duration-300 hover:rotate-[360deg]";
 
@@ -29,10 +30,10 @@ export default function AuthorCard() {
       >
         加入书签
       </Button>
-      <div className="flex justify-center text-2xl mt-2">
+      <div className="flex justify-center text-2xl mt-2 gap-2">
         <a
           href={config.github}
-          className={cls("mr-2", hoverRotateClassName)}
+          className={hoverRotateClassName}
           title="github"
           target="_blank"
         >
@@ -40,12 +41,20 @@ export default function AuthorCard() {
         </a>
         <a
           href={config.gitee}
-          className={cls(hoverRotateClassName)}
+          className={hoverRotateClassName}
           title="gitee"
           target="_blank"
         >
           <Icon icon="simple-icons:gitee" />
         </a>
+        <Link
+          href="/feed.xml"
+          className={hoverRotateClassName}
+          title="rss"
+          target="_blank"
+        >
+          <Icon icon="mingcute:rss-2-fill" />
+        </Link>
       </div>
     </div>
   );

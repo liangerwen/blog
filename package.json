@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "node ./scripts/transform.js && next build",
+    "trans": "node ./scripts/transform.js",
     "start": "next start",
     "lint": "next lint"
   },

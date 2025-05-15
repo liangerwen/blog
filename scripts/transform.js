@@ -17,7 +17,7 @@ const addDateFrontmatter = (dir) => {
       if (!parsed.data.date) {
         const updatedContent = matter.stringify(parsed.content, {
           ...parsed.data,
-          date: new Date().toLocaleDateString(),
+          date: new Date().toLocaleDateString("zh-CN"),
         });
         fs.writeFileSync(filePath, updatedContent);
         console.log(`✅ [date]已更新: ${filePath}`);

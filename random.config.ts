@@ -1,29 +1,26 @@
 const configs = {
   pc: [
-    "https://t.mwm.moe/ycy",
-    "https://t.mwm.moe/moez",
-    "https://t.mwm.moe/ai",
-    "https://t.mwm.moe/ysz",
-    "https://t.mwm.moe/pc",
-    "https://t.mwm.moe/moe",
-    "https://t.mwm.moe/fj",
-    "https://t.mwm.moe/ys",
+    "https://t.alcy.cc/ycy",
+    "https://t.alcy.cc/moez",
+    "https://t.alcy.cc/ai",
+    "https://t.alcy.cc/ysz",
+    "https://t.alcy.cc/pc",
+    "https://t.alcy.cc/moe",
+    "https://t.alcy.cc/fj",
+    "https://t.alcy.cc/ys",
   ],
   mp: [
-    "https://t.mwm.moe/mp",
-    "https://t.mwm.moe/moemp",
-    "https://t.mwm.moe/ysmp",
-    "https://t.mwm.moe/aimp",
+    "https://t.alcy.cc/mp",
+    "https://t.alcy.cc/moemp",
+    "https://t.alcy.cc/ysmp",
+    "https://t.alcy.cc/aimp",
   ],
   avatar: [
-    "https://t.mwm.moe/lai",
-    "https://t.mwm.moe/tx",
-    "https://t.mwm.moe/xhl",
+    "https://t.alcy.cc/lai",
+    "https://t.alcy.cc/tx",
+    "https://t.alcy.cc/xhl",
   ],
 } as const;
-
-// 绕过证书已过期的问题
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export default async function getRandomImageUrl(type: keyof typeof configs) {
   const cfg = configs[type];

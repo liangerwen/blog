@@ -1,0 +1,202 @@
+## 简介
+
+`React-Customer` 是一个专为 `React` 技术栈设计的定制化库，它的核心目标是实现平台逻辑与定制逻辑的解耦，从而提高项目的可维护性、可扩展性和可复用性。
+
+在 `SaaS（Software as a Service）`平台开发中，经常需要为不同客户提供定制化的功能，而传统的开发方式往往导致代码耦合度高、难以维护。`React-Customer` 通过提供一套完整的定制化解决方案，使平台开发者和定制开发者能够独立工作，同时保持良好的交互。
+
+## 核心架构
+
+`React-Customer` 采用了基于 `React Context` 的提供者-消费者模式，实现了平台组件与定制插件之间的无缝集成。
+![核心架构](https://raw.githubusercontent.com/liangerwen/pic-hosting/main/images/1747291946081-screenshot-20250515-145113.webp)
+
+## 关键组件
+
+1. `CustomProvider`：作为定制系统的入口点，维护 UI 元素、平台 API、定制 API 和定制组件的中央注册表。
+2. `withCustom` HOC：包装平台组件，使其可被定制，通过注册带有 `data-id` 属性的元素、暴露平台 API 给插件以及消费插件的定制 API。
+3. `withDefineCustom` HOC：创建可以修改平台组件的插件组件，通过访问平台 API、提供定制 API 以及使用元素操作工具来操作 UI 元素。
+4. 元素操作系统：提供一系列工具函数，用于修改组件树中的 `React` 元素，这些工具通过`merge`函数提供给插件。
+
+## 工作原理
+
+`React-Customer` 的工作原理基于以下几个关键概念：
+
+### 组件标识与定制
+
+平台组件使用 `data-id` 属性来标识可定制的元素，这使得插件可以精确地定位和修改特定元素，而无需直接耦合到其内部结构。
+
+### 双向 API 通信
+
+该库使用双向 API 系统，实现平台组件和插件之间的通信：<br/>
+平台 API：从平台组件向插件暴露功能，通过平台组件中的 `exposeApi` 实现。<br/>
+定制 API：从插件向平台组件暴露功能，通过插件中的 `useImperativeHandle` 实现。<br/>
+这种双向 API 系统允许平台和定制逻辑之间松散耦合，实现独立开发和维护。
+
+### 元素操作机制
+
+插件通过`merge`函数提供的工具来修改平台组件的元素，包括：
+
+- `appendBefore`：在目标元素之前添加新元素
+- `appendAfter`：在目标元素之后添加新元素
+- `replace`：完全替换目标元素
+- `replaceChildren`：替换目标元素的子元素
+- `replaceProps`：修改目标元素的属性
+- `remove`：移除目标元素
+- `insertBefore`：在目标元素之前插入子元素
+- `insertAfter`：在目标元素之后插入子元素
+
+### 数据流与组件交互
+
+`React-Customer` 通过中心化的上下文系统实现平台组件和插件之间的双向通信：
+![双向通信](https://raw.githubusercontent.com/liangerwen/pic-hosting/main/images/1747292224097-screenshot-20250515-145646.webp)
+
+## 使用示例
+
+### 安装
+
+```
+pnpm install react-customer -S
+```
+
+### 设置 CustomProvider
+
+首先，在应用的入口点设置 `CustomProvider` 并传入插件数组：
+
+```tsx title=main.tsx
+import { CustomProvider } from "react-customer";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+import plugins from "./plugins.tsx";
+
+// 这里插件可根据不同客户应用不同定制化插件
+createRoot(document.getElementById("root")!).render(
+  <CustomProvider plugins={plugins}>
+    <App />
+  </CustomProvider>
+);
+```
+
+### 创建平台组件
+
+使用 `withCustom` HOC 包装平台组件，使其可定制：
+
+```tsx title=app.tsx
+import { withCustom } from "react-customer";
+import { Button } from "antd";
+
+export interface AppExposeApi {
+  clickButton: () => void;
+}
+
+export interface AppCustomApi {
+  setInputText: (text: string) => void;
+}
+
+const App = withCustom<AppCustomApi, AppExposeApi>(
+  "App",
+  ({ customApi, exposeApi, wrap }) => {
+    const clickButton = () => {
+      customApi?.setInputText?.("点击了Button1");
+    };
+
+    exposeApi({ clickButton });
+
+    return wrap(
+      <>
+        <Button type="primary" onClick={clickButton} data-id="button-01">
+          我是Button1
+        </Button>
+        <Button
+          data-id="button-02"
+          type="dashed"
+          onClick={() => {
+            customApi?.setInputText?.("点击了Button2");
+          }}
+        >
+          我是Button2
+        </Button>
+      </>
+    );
+  }
+);
+
+export default App;
+```
+
+### 创建定制插件
+
+使用 `withDefineCustom` HOC 创建定制插件：
+
+```tsx title=plugins.tsx
+import { forwardRef, useState, useImperativeHandle } from "react";
+import { withDefineCustom } from "react-customer";
+import { Button, ButtonProps, Input } from "antd";
+
+const AppPlugin = withDefineCustom<{
+  clickButton: () => void;
+}>(
+  "App",
+  forwardRef(({ merge, platformApi }, ref) => {
+    const [text, setText] = useState("");
+
+    const setInputText = (txt: string) => setText(txt);
+
+    useImperativeHandle(ref, () => {
+      return { setInputText };
+    });
+
+    return merge((element) => {
+      element.replaceChildren("button-02", "我是Button2【定制按钮-A】");
+      element.replaceProps<ButtonProps>("button-02", {
+        onClick: () => {
+          setText("点击了定制按钮Button2【A】");
+        },
+      });
+      element.appendBefore(
+        "button-01",
+        <Button
+          onClick={() => {
+            platformApi?.clickButton?.();
+          }}
+        >
+          我是定制按钮Button3【A】
+        </Button>
+      );
+      element.appendAfter(
+        "button-02",
+        <Input value={text} onChange={(e) => setText(e.target.value)} />
+      );
+    });
+  })
+);
+
+export default [AppPlugin];
+```
+
+## 应用场景
+
+`React-Customer` 特别适用于以下场景：
+
+1. SaaS 平台定制化
+   对于需要为不同客户提供定制化功能的 SaaS 平台，`React-Customer` 提供了一种优雅的方式来实现定制，而不需要为每个客户维护单独的代码分支。
+2. 大型企业应用
+   在大型企业应用中，不同部门或业务线可能需要对共享组件进行定制。React-Customer 允许基于同一套核心组件，为不同业务需求提供定制化解决方案。
+3. 白标产品开发
+   对于需要以不同品牌或外观提供的白标产品，React-Customer 可以轻松实现 UI 的定制化，包括样式、布局和功能的调整。
+4. 插件化架构
+   对于希望实现插件化架构的应用，React-Customer 提供了一种结构化的方式来定义和集成插件，使应用更具扩展性。
+
+## 优势与特点
+
+- 解耦平台与定制逻辑：平台开发者和定制开发者可以独立工作，减少协作成本。
+- 非侵入式定制：通过 `data-id` 属性标识元素，实现对组件的精确定制，而不需要修改原始组件代码。
+- 双向 API 通信：平台组件和定制插件之间可以双向通信，实现复杂的交互逻辑。
+- 类型安全：通过 `TypeScript` 接口定义平台 API 和定制 API，提供类型安全的开发体验。
+- 灵活的元素操作：提供丰富的元素操作工具，满足各种定制需求。
+
+## 总结
+
+`React-Customer` 是一个为 `React` 设计的定制化库，通过提供结构化的方式来解耦平台逻辑和定制逻辑，使得 `SaaS` 应用的定制化开发更加高效和可维护。<br/>
+它的核心架构基于 `React Context` 和高阶组件，实现了平台组件和定制插件之间的无缝集成。<br/>
+无论是需要为不同客户提供定制化功能的 `SaaS` 平台，还是需要实现插件化架构的大型企业应用，`React-Customer` 都提供了一种优雅而强大的解决方案。<br/>
+附上 `github` 地址：[https://github.com/liangerwen/react-customer](https://github.com/liangerwen/react-customer)
